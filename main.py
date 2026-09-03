@@ -10,7 +10,7 @@ from fastapi.staticfiles import StaticFiles
 from app.chat.router import router as chat_router, admin_router
 from app.rag.search import load_knowledge
 
-app = FastAPI(title="Marles Hiše AI", version="1.0.0")
+app = FastAPI(title="Ornament Spa AI", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 static_dir = Path(__file__).parent / "static"
@@ -21,7 +21,7 @@ if static_dir.exists():
 def startup():
     kb_path = Path(__file__).parent / "knowledge.jsonl"
     count = load_knowledge(kb_path)
-    print(f"[startup] Marles Hiše AI — {count} knowledge chunks loaded")
+    print(f"[startup] Ornament Spa AI — {count} knowledge chunks loaded")
 
 @app.get("/health")
 def health():
@@ -32,7 +32,7 @@ def home():
     widget_html = static_dir / "widget.html"
     if widget_html.exists():
         return widget_html.read_text(encoding="utf-8")
-    return "<h1>Marles Hiše AI</h1>"
+    return "<h1>Ornament Spa AI</h1>"
 
 app.include_router(chat_router)
 app.include_router(admin_router)

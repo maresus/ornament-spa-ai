@@ -285,7 +285,7 @@
     xBtn.onclick = function(e) { e.stopPropagation(); e.preventDefault(); hideCards(); };
     greetingCards.appendChild(xBtn);
 
-    ['Pozdravljeni 👋', 'Gradite nov dom?', 'Pomagam vam pri izbiri!'].forEach(function(text) {
+    ['Pozdravljeni 👋', 'Katere masaže ponujate?', 'Zanima me wellness za pare!'].forEach(function(text) {
       var btn = document.createElement('button');
       btn.setAttribute('style', cardStyle);
       btn.textContent = text;
@@ -351,17 +351,17 @@
           <div class="kv-field">
             <label>Vrsta povpraševanja</label>
             <div class="kv-checkboxes">
-              <label class="kv-checkbox-item"><input type="checkbox" value="Fresh linija"> Fresh</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Pure linija"> Pure</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Prime linija"> Prime</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Tiny linija"> Tiny</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Forever Mine"> Forever Mine</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="B2B"> B2B</label>
+              <label class="kv-checkbox-item"><input type="checkbox" value="Masaže"> Masaže</label>
+              <label class="kv-checkbox-item"><input type="checkbox" value="Savne / wellness"> Savne</label>
+              <label class="kv-checkbox-item"><input type="checkbox" value="Terapije"> Terapije</label>
+              <label class="kv-checkbox-item"><input type="checkbox" value="Romantični paketi"> Za pare</label>
+              <label class="kv-checkbox-item"><input type="checkbox" value="Zasebni wellness"> Zasebni najem</label>
+              <label class="kv-checkbox-item"><input type="checkbox" value="E-kolo"> E-kolo</label>
             </div>
           </div>
           <div class="kv-field">
             <label>Sporocilo</label>
-            <textarea id="jf-sporocilo" placeholder="Željene velikost, lokacija, rok, posebne zahteve..."></textarea>
+            <textarea id="jf-sporocilo" placeholder="Željeni termin, storitev, posebne zahteve..."></textarea>
           </div>
           <button id="mo-inquiry-submit">POSLJI POVPRASEVANJE</button>
         </div>
@@ -369,9 +369,9 @@
           <div class="kv-success-icon">
             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
           </div>
-          <h4>Povprasevanje poslano!</h4>
-          <p>Nasa ekipa vas bo kontaktirala v najkrajsem moznem casu.<br><br>
-          Maribor: 02 429 45 00<br>Ljubljana: 08 205 28 51</p>
+          <h4>Povpraševanje poslano!</h4>
+          <p>Naša ekipa vas bo kontaktirala v najkrajšem možnem času.<br><br>
+          Tel: 031 683 787<br>info@ornamentspa.eu</p>
         </div>
       </div>
     `;
