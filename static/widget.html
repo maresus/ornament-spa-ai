@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ornament Spa — AI pomočnik</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: system-ui, sans-serif; }
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute;
+      width: 100%;
+      height: calc(100% + 120px);
+      top: -120px;
+      object-fit: cover;
+      object-position: center bottom;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(130,77,136,0.45) 0%, rgba(130,77,136,0.15) 60%, transparent 100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <img class="hero-img" src="/static/bg.webp" alt="Ornament Spa">
+    <div class="hero-overlay"></div>
+  </div>
+  <script src="/static/widget.js?v=2"></script>
+</body>
+</html>
