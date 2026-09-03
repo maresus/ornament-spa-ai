@@ -40,7 +40,7 @@ class ChatResponse(BaseModel):
 class InquiryRequest(BaseModel):
     ime: str
     telefon: str
-    email: str
+    email: str | None = None
     sporocilo: str | None = None
     tip: str | None = None
 
@@ -133,7 +133,7 @@ async def submit_inquiry(payload: InquiryRequest):
       <table style="width:100%;border-collapse:collapse;">
         <tr><td style="padding:8px 0;color:#666;width:140px;"><b>Ime</b></td><td>{payload.ime}</td></tr>
         <tr><td style="padding:8px 0;color:#666;"><b>Telefon</b></td><td><a href="tel:{payload.telefon}" style="color:{BRAND};">{payload.telefon}</a></td></tr>
-        <tr><td style="padding:8px 0;color:#666;"><b>Email</b></td><td><a href="mailto:{payload.email}" style="color:{BRAND};">{payload.email}</a></td></tr>
+        <tr><td style="padding:8px 0;color:#666;"><b>Email</b></td><td>{f'<a href="mailto:{payload.email}" style="color:{BRAND};">{payload.email}</a>' if payload.email else "-"}</td></tr>
         <tr><td style="padding:8px 0;color:#666;"><b>Storitev</b></td><td>{payload.tip or "-"}</td></tr>
         <tr><td style="padding:8px 0;color:#666;vertical-align:top;"><b>Sporočilo</b></td><td>{payload.sporocilo or "-"}</td></tr>
       </table>
@@ -158,7 +158,8 @@ async def submit_inquiry(payload: InquiryRequest):
       <p style="color:#999;font-size:12px;">Wellness Ornament, Katrin Vidnar s.p. · Ljubljanska cesta 10, Kostanjevica na Krki</p>
     </div>
     </body></html>"""
-    _send_email(payload.email, "Potrditev povpraševanja — Ornament Spa", confirm_html)
+    if payload.email:
+        _send_email(payload.email, "Potrditev rezervacije — Ornament Spa", confirm_html)
     return {"ok": True, "id": inq_id}
 
 

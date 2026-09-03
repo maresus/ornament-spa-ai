@@ -192,17 +192,17 @@
     #kv-scroll-down.kv-visible { display: flex; }
     #kv-scroll-down svg { width: 20px; height: 20px; fill: white !important; }
 
-    #mo-inquiry-btn-bar { padding: 10px 16px 6px; background: white; border-top: 1px solid #ffe0c0; flex-shrink: 0; }
+    #mo-inquiry-btn-bar { padding: 10px 16px 6px; background: white; border-top: 1px solid rgba(130,77,136,0.15); flex-shrink: 0; }
     #mo-inquiry-btn { width: 100%; background: ${CONFIG.accentColor}; color: #fff; border: none; border-radius: 10px; padding: 11px 16px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     #mo-inquiry-btn:hover { background: ${CONFIG.brandColorHover}; }
 
     #mo-inquiry-form-view { display: none; flex-direction: column; flex: 1; overflow: hidden; }
     #mo-inquiry-form-view.kv-visible { display: flex; }
-    #mo-inquiry-form-header { background: ${CONFIG.accentColor}; color: #fff; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    #mo-inquiry-form-header { background: linear-gradient(135deg, #824D88 0%, #6a3d70 100%); color: #fff; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
     #mo-inquiry-form-header span { font-size: 14px; font-weight: 700; }
     #mo-inquiry-back { background: none; border: none; color: #fff; cursor: pointer; font-size: 13px; padding: 4px 8px; border-radius: 6px; opacity: 0.9; }
     #mo-inquiry-back:hover { background: rgba(255,255,255,0.2); }
-    #mo-inquiry-form-scroll { flex: 1; overflow-y: auto; padding: 14px 16px; background: #f9f9f9; }
+    #mo-inquiry-form-scroll { flex: 1; overflow-y: auto; padding: 14px 16px; background: #f9f7f5; }
 
     .kv-field { margin-bottom: 11px; }
     .kv-field label { display: block; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 4px; }
@@ -219,7 +219,7 @@
     #mo-inquiry-submit:hover { background: ${CONFIG.brandColorHover}; }
     #mo-inquiry-submit:disabled { background: #aaa; cursor: not-allowed; }
 
-    #mo-inquiry-success { display: none; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 32px 24px; text-align: center; background: #f9f9f9; }
+    #mo-inquiry-success { display: none; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 32px 24px; text-align: center; background: #f9f7f5; }
     #mo-inquiry-success.kv-visible { display: flex; }
     #mo-inquiry-success .kv-success-icon { width: 56px; height: 56px; background: ${CONFIG.brandColor}; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
     #mo-inquiry-success .kv-success-icon svg { width: 28px; height: 28px; fill: white; }
@@ -319,20 +319,20 @@
         </div>
         <div id="mo-inquiry-btn-bar">
           <button id="mo-inquiry-btn">
-            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:white;flex-shrink:0;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-            POSLJI POVPRASEVANJE
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:white;flex-shrink:0;"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+            Rezerviraj termin
           </button>
         </div>
         <div id="kv-widget-input-area">
           <input type="text" id="kv-widget-input" placeholder="${CONFIG.placeholder}">
           <button id="kv-widget-send">${icons.send}</button>
         </div>
-        <div id="kv-widget-disclaimer">&#x1F916; Ta asistent je umetna inteligenca (AI) &mdash; EU AI Act cl. 50. Za ponudbo poklic&#774;ite <a href="tel:+38602429450002">02 429 45 00</a>.</div>
+        <div id="kv-widget-disclaimer">&#x1F916; Ta asistent je umetna inteligenca (AI) — EU AI Act cl. 50. Za rezervacijo pokli&#269;ite <a href="tel:+38631683787">031 683 787</a>.</div>
         <div id="kv-widget-powered">built by: <a href="https://spoznaj-ai.si" target="_blank">spoznaj-ai.si</a></div>
       </div>
       <div id="mo-inquiry-form-view">
         <div id="mo-inquiry-form-header">
-          <span>Povpraševanje za ponudbo</span>
+          <span>Rezervacija termina</span>
           <button id="mo-inquiry-back">&larr; Nazaj</button>
         </div>
         <div id="mo-inquiry-form-scroll">
@@ -345,11 +345,7 @@
             <input type="tel" id="jf-telefon" placeholder="+386 ...">
           </div>
           <div class="kv-field">
-            <label>E-posta <span>*</span></label>
-            <input type="email" id="jf-email" placeholder="vas@email.com">
-          </div>
-          <div class="kv-field">
-            <label>Vrsta povpraševanja</label>
+            <label>Storitev</label>
             <div class="kv-checkboxes">
               <label class="kv-checkbox-item"><input type="checkbox" value="Masaže"> Masaže</label>
               <label class="kv-checkbox-item"><input type="checkbox" value="Savne / wellness"> Savne</label>
@@ -360,18 +356,18 @@
             </div>
           </div>
           <div class="kv-field">
-            <label>Sporocilo</label>
-            <textarea id="jf-sporocilo" placeholder="Željeni termin, storitev, posebne zahteve..."></textarea>
+            <label>Željeni termin ali sporočilo</label>
+            <textarea id="jf-sporocilo" placeholder="Npr. petek popoldne, 2 osebi..."></textarea>
           </div>
-          <button id="mo-inquiry-submit">POSLJI POVPRASEVANJE</button>
+          <button id="mo-inquiry-submit">Pošlji rezervacijo</button>
         </div>
         <div id="mo-inquiry-success">
           <div class="kv-success-icon">
             <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
           </div>
-          <h4>Povpraševanje poslano!</h4>
-          <p>Naša ekipa vas bo kontaktirala v najkrajšem možnem času.<br><br>
-          Tel: 031 683 787<br>info@ornamentspa.eu</p>
+          <h4>Rezervacija poslana!</h4>
+          <p>Kontaktirali vas bomo v najkrajšem moznem casu.<br><br>
+          Tel: <a href="tel:+38631683787" style="color:#824D88;">031 683 787</a><br>info@ornamentspa.eu</p>
         </div>
       </div>
     `;
@@ -555,7 +551,7 @@
       addMessage(data.reply || 'Oprostite, prislo je do napake.', 'bot');
     } catch (err) {
       hideTyping();
-      addMessage('Oprostite, trenutno ni možno vzpostaviti povezave. Pokličite: 02 429 45 00.', 'bot');
+      addMessage('Oprostite, trenutno ni mozno vzpostaviti povezave. Pokli&#269;ite: 031 683 787.', 'bot');
     }
     sendBtn.disabled = false;
     input.focus();
@@ -576,11 +572,10 @@
   async function submitInquiryForm() {
     var ime = document.getElementById('jf-ime').value.trim();
     var telefon = document.getElementById('jf-telefon').value.trim();
-    var email = document.getElementById('jf-email').value.trim();
-    if (!ime || !telefon || !email) { alert('Prosimo, izpolnite vsa obvezna polja (*).'); return; }
+    if (!ime || !telefon) { alert('Prosimo, vnesite ime in telefonsko stevilko.'); return; }
     var tipi = [];
     document.querySelectorAll('.kv-checkboxes input[type=checkbox]:checked').forEach(function(cb) { tipi.push(cb.value); });
-    var payload = { ime: ime, telefon: telefon, email: email, tip: tipi.join(', ') || null, sporocilo: document.getElementById('jf-sporocilo').value.trim() || null };
+    var payload = { ime: ime, telefon: telefon, email: '', tip: tipi.join(', ') || null, sporocilo: document.getElementById('jf-sporocilo').value.trim() || null };
     var btn = document.getElementById('mo-inquiry-submit');
     btn.disabled = true; btn.textContent = 'Posiljam...';
     try {
@@ -589,8 +584,8 @@
       document.getElementById('mo-inquiry-form-scroll').style.display = 'none';
       document.getElementById('mo-inquiry-success').classList.add('kv-visible');
     } catch (e) {
-      alert('Napaka pri pošiljanju. Pokličite: 02 429 45 00');
-      btn.disabled = false; btn.textContent = 'POSLJI POVPRASEVANJE';
+      alert('Napaka pri posiljanju. Pokli&#269;ite: 031 683 787');
+      btn.disabled = false; btn.textContent = 'Posji rezervacijo';
     }
   }
 
