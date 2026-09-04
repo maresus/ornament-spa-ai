@@ -444,6 +444,35 @@ def panel_vprasanja(key: str = Query(default=""), obdobje: str = Query(default="
     return {"vprasanja": result}
 
 
+_OBJAVE = {
+    "teden": [
+        ["Zasebni wellness za dva — nedeljski večer", "Instagram", "zn",   4820, 312, 41],
+        ["Access Bars® — kaj sploh je",               "Facebook",  "zn v", 2140,  96, 17],
+        ["Masaža hrbta v 30 sekundah",                "TikTok",    "zn t", 9630, 184,  9],
+        ["Jutranja savna — zakaj deluje",             "Instagram", "zn",   1780,  74,  6],
+    ],
+    "prej": [
+        ["Darilni bon za rojstni dan",  "Facebook",  "zn v", 1920, 88, 14],
+        ["Nova terapija Access Lift",   "Instagram", "zn",   2260, 131, 11],
+        ["E-kolo po Dolenjski",         "TikTok",    "zn t", 5410, 97,   3],
+    ],
+    "mesec": [
+        ["Zasebni wellness za dva — nedeljski večer", "Instagram", "zn",   4820, 312, 41],
+        ["Nova terapija Access Lift",                 "Instagram", "zn",   2260, 131, 11],
+        ["Masaža hrbta v 30 sekundah",                "TikTok",    "zn t", 9630, 184,  9],
+        ["Darilni bon za rojstni dan",                "Facebook",  "zn v", 1920,  88, 14],
+        ["Access Bars® — kaj sploh je",               "Facebook",  "zn v", 2140,  96, 17],
+        ["E-kolo po Dolenjski",                       "TikTok",    "zn t", 5410,  97,  3],
+    ],
+}
+
+
+@admin_router.get("/api/panel/objave")
+def panel_objave(key: str = Query(default=""), obdobje: str = Query(default="teden")):
+    _check_admin(key)
+    return {"objave": _OBJAVE.get(obdobje, [])}
+
+
 _OGLASI = {
     "teden": [["Zasebni wellness — pari", 64, 9], ["Darilni boni", 38, 4], ["Masaže — splošno", 22, 1]],
     "prej":  [["Zasebni wellness — pari", 60, 7], ["Darilni boni", 40, 3], ["Masaže — splošno", 25, 1]],

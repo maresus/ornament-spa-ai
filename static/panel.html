@@ -297,7 +297,7 @@ document.getElementById('loginGeslo').addEventListener('keydown', e => { if(e.ke
 
 async function fetchAll() {
   try {
-    const [rezD, trendD, gostjeD, pogD, vprD, predD, ogT, ogP, ogM] = await Promise.all([
+    const [rezD, trendD, gostjeD, pogD, vprD, predD, ogT, ogP, ogM, obT, obP, obM] = await Promise.all([
       apiGet('/api/panel/rezervacije'),
       apiGet('/api/panel/trend'),
       apiGet('/api/panel/gostje'),
@@ -307,6 +307,9 @@ async function fetchAll() {
       apiGet('/api/panel/oglasi?obdobje=teden'),
       apiGet('/api/panel/oglasi?obdobje=prej'),
       apiGet('/api/panel/oglasi?obdobje=mesec'),
+      apiGet('/api/panel/objave?obdobje=teden'),
+      apiGet('/api/panel/objave?obdobje=prej'),
+      apiGet('/api/panel/objave?obdobje=mesec'),
     ]);
 
     REZ = (rezD.rezervacije || []).map(inq => {
@@ -363,6 +366,9 @@ async function fetchAll() {
     P.teden.oglasi = ogT.oglasi || [];
     P.prej.oglasi  = ogP.oglasi || [];
     P.mesec.oglasi = ogM.oglasi || [];
+    P.teden.objave = obT.objave || [];
+    P.prej.objave  = obP.objave || [];
+    P.mesec.objave = obM.objave || [];
 
     const ts = new Date().toLocaleTimeString('sl-SI', {hour:'2-digit',minute:'2-digit'});
     document.getElementById('nogaS').innerHTML = 'Osveženo ob ' + ts + '<br><b style="color:#8A6D2C">Ornament Panel · v živo</b>';
