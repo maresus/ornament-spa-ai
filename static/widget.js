@@ -1,10 +1,13 @@
 (function() {
   'use strict';
 
+  var _scriptSrc = (document.currentScript || {}).src || '';
+  var _BASE = _scriptSrc ? new URL(_scriptSrc).origin : window.location.origin;
+
   const CONFIG = {
-    apiUrl: 'https://ornament-spa.up.railway.app/chat',
-    inquiryUrl: 'https://ornament-spa.up.railway.app/chat/inquiry',
-    logoUrl: 'https://ornament-spa.up.railway.app/static/logo.png',
+    apiUrl: _BASE + '/chat',
+    inquiryUrl: _BASE + '/chat/inquiry',
+    logoUrl: _BASE + '/static/logo.png',
     brandColor: '#824D88',
     brandColorHover: '#6a3d70',
     accentColor: '#824D88',
@@ -295,9 +298,16 @@
 
     const bubble = document.createElement('button');
     bubble.id = 'kv-widget-bubble';
-    bubble.innerHTML = CONFIG.logoUrl
-      ? `<img src="${CONFIG.logoUrl}" alt="Ornament Spa" style="width:50px;height:50px;object-fit:contain;border-radius:50%;background:white;padding:5px;" onerror="this.outerHTML='${icons.chat}'">`
-      : icons.chat;
+    if (CONFIG.logoUrl) {
+      var logoImg = document.createElement('img');
+      logoImg.src = CONFIG.logoUrl;
+      logoImg.alt = 'Ornament Spa';
+      logoImg.style.cssText = 'width:50px;height:50px;object-fit:contain;border-radius:50%;background:white;padding:5px;';
+      logoImg.onerror = function() { bubble.innerHTML = icons.chat; };
+      bubble.appendChild(logoImg);
+    } else {
+      bubble.innerHTML = icons.chat;
+    }
     bubble.onclick = function(e) { e.stopPropagation(); e.preventDefault(); setTimeout(togglePanel, 0); };
 
     const panel = document.createElement('div');
