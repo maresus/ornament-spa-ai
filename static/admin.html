@@ -215,13 +215,14 @@
     .spin { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--brand-light); border-top-color: var(--brand); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
+  <link rel="stylesheet" href="/static/ornament_admin_theme.css">
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <img src="/static/logo.png" alt="Ornament Spa" onerror="this.style.display='none'">
+    <img src="/static/logo_dark.png" alt="Ornament Spa" style="width:160px;height:auto;" onerror="this.style.display='none'">
     <h1>Ornament Spa</h1>
     <p>Admin panel — Wellness rezervacije</p>
     <input class="login-input" type="password" id="login-key" placeholder="••••••••" autocomplete="current-password">
@@ -236,7 +237,7 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-brand">
-      <img src="/static/logo.png" alt="logo" onerror="this.style.display='none'">
+      <img src="/static/logo_dark.png" alt="logo" onerror="this.style.display='none'">
       <h2>Ornament Spa</h2>
       <p>Admin panel</p>
     </div>
