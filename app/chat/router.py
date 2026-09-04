@@ -166,8 +166,7 @@ async def submit_inquiry(payload: InquiryRequest):
 # ── ADMIN PANEL ──────────────────────────────────────────────────────────────
 
 @admin_router.get("/admin", response_class=HTMLResponse)
-def admin_panel(key: str = Query(default="")):
-    _check_admin(key)
+def admin_panel():
     admin_html_path = Path(__file__).parent.parent.parent / "static" / "admin.html"
     if admin_html_path.exists():
         html = admin_html_path.read_text(encoding="utf-8")
