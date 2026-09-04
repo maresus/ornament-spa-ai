@@ -129,7 +129,7 @@
       #kv-widget-panel {
         position: fixed !important; top: 0 !important; left: 0 !important;
         right: 0 !important; bottom: 0 !important; width: 100% !important;
-        height: auto !important; max-height: none !important;
+        height: 100dvh !important; max-height: 100dvh !important;
         border-radius: 0 !important; margin: 0 !important;
       }
       #kv-widget-panel.kv-open { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; }
@@ -450,7 +450,7 @@
     var panel = document.getElementById('kv-widget-panel');
     panel.classList.add('kv-open');
     if (window.innerWidth <= CONFIG.mobileBreakpoint) {
-      panel.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:auto;max-height:none;border-radius:0;';
+      panel.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100dvh;max-height:100dvh;border-radius:0;';
       document.body.style.overflow = 'hidden';
       document.getElementById('kv-launcher').style.display = 'none';
     }
@@ -531,6 +531,16 @@
     escaped = escaped.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:#824D88;text-decoration:underline;">$1</a>');
     escaped = escaped.replace(/(?<!=["'])(https?:\/\/[^\s<>"')\]]+)/g, '<a href="$1" target="_blank" rel="noopener" style="color:#824D88;text-decoration:underline;">$1</a>');
     escaped = escaped.replace(/(?<![/"'=])(www\.[a-zA-Z0-9][^\s<>"')\]]+)/g, '<a href="https://$1" target="_blank" rel="noopener" style="color:#824D88;text-decoration:underline;">$1</a>');
+    // Klikljivi emaili (pred telefoni, da @ ne zmoti regex)
+    escaped = escaped.replace(/([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1" style="color:#824D88;text-decoration:underline;">$1</a>');
+    // Klikljivi telefoni (format: 031 683 787 ali 031683787 ali +38631683787)
+    escaped = escaped.replace(/\b(\+386\s?\d{2}\s?\d{3}\s?\d{3})\b/g, function(m) {
+      var d = m.replace(/\s/g, ''); return '<a href="tel:' + d + '" style="color:#824D88;text-decoration:underline;">' + m + '</a>';
+    });
+    escaped = escaped.replace(/\b(0\d{2})[\s]?(\d{3})[\s]?(\d{3})\b/g, function(m, a, b, c) {
+      var intl = '+386' + a.substring(1) + b + c;
+      return '<a href="tel:' + intl + '" style="color:#824D88;text-decoration:underline;">' + m + '</a>';
+    });
     escaped = escaped.replace(/((?:^|\n)- [^\n]+)+/g, function(block) {
       var items = block.trim().split(/\n/).map(function(line) { return '<li>' + line.replace(/^- /, '') + '</li>'; }).join('');
       return '<ul style="margin:6px 0 6px 16px;padding:0;">' + items + '</ul>';
