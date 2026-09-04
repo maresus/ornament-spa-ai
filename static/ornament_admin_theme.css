@@ -295,7 +295,7 @@ body:has(.login-box) {
   box-shadow: 0 0 0 3px rgba(215,173,85,.15) !important;
 }
 
-/* ---------- kalendarski trak ---------- */
+/* ---------- kalendarski trak (legacy) ---------- */
 .cal-day {
   border: 1px solid var(--o-rob) !important;
   border-radius: 12px !important;
@@ -313,6 +313,110 @@ body:has(.login-box) {
 .cal-day.active .day-num { color: var(--o-temna) !important; }
 .day-dot { background: var(--o-zlata) !important; }
 .cal-day.active .day-dot { background: var(--o-zlata-t) !important; opacity: 1 !important; }
+
+/* ---------- mesečni grid-kalendar ---------- */
+.cal-nav h2 {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-size: 22px !important;
+  font-weight: 400 !important;
+  color: var(--o-temna) !important;
+}
+.cal-grid-header div {
+  font-size: 10px !important;
+  letter-spacing: 1.4px !important;
+  text-transform: uppercase !important;
+  color: var(--o-siva) !important;
+}
+.cal-cell {
+  background: var(--o-bela) !important;
+  border: 1px solid var(--o-rob) !important;
+  border-radius: 10px !important;
+  min-height: 72px !important;
+  transition: .15s !important;
+}
+.cal-cell:hover {
+  border-color: var(--o-zlata) !important;
+  background: #FDF9F0 !important;
+}
+.cal-cell.today {
+  border-color: var(--o-zlata) !important;
+  background: linear-gradient(150deg, #FDF7EA, #F7EDD6) !important;
+}
+.cal-cell.today .cal-date {
+  color: #8A6D2C !important;
+  font-weight: 700 !important;
+}
+.cal-cell.selected {
+  background: linear-gradient(150deg, var(--o-sliva), var(--o-sliva-t)) !important;
+  border-color: var(--o-sliva-t) !important;
+}
+.cal-cell.selected .cal-date { color: #fff !important; }
+.cal-cell.other-month { background: #FAFAF8 !important; border-color: #F2EDE6 !important; }
+.cal-date {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--o-temna) !important;
+}
+.cal-dot-caka { background: #C99C3E !important; }
+.cal-dot-potrjeno { background: var(--o-sliva) !important; }
+.cal-dot-zavrnjeno { background: #B4544E !important; }
+.cal-count {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  color: #8A6D2C !important;
+  background: #F6F0E3 !important;
+  border-radius: 10px !important;
+}
+.cal-cell.selected .cal-count {
+  background: rgba(255,255,255,0.25) !important;
+  color: #fff !important;
+}
+
+/* ---------- urgentna sekcija ---------- */
+.urgent-section {
+  background: #FDF7EA !important;
+  border: 1px solid #EBD9AE !important;
+  border-radius: 14px !important;
+}
+.urgent-header { color: #8A6D2C !important; }
+.urgent-header svg { fill: #8A6D2C !important; }
+
+/* ---------- nav badge ---------- */
+.nav-badge {
+  background: #B4544E !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 10px !important;
+}
+
+/* ---------- inline opomba ---------- */
+.inline-note-input {
+  border: 1px solid var(--o-rob) !important;
+  border-radius: 8px !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 12px !important;
+  background: var(--o-krem) !important;
+}
+.inline-note-input:focus {
+  border-color: var(--o-zlata) !important;
+  outline: none !important;
+}
+.reserv-admin-note {
+  background: #F6F0E3 !important;
+  color: #8A6D2C !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+}
+.reserv-note { color: var(--o-siva) !important; }
+
+/* ---------- gumbi xs/sm v karticah ---------- */
+.btn-success { background: #EEF6EE !important; color: #2e7d32 !important; }
+.btn-success:hover { background: #c8e6c9 !important; }
+.btn-danger { background: #F7E9E8 !important; color: #B4544E !important; }
+.btn-danger:hover { background: #ffcdd2 !important; }
+.btn-warning { background: #F6F0E3 !important; color: #8A6D2C !important; text-decoration: none !important; }
+.btn-warning:hover { background: #EBD9AE !important; }
+.btn-xs { padding: 3px 9px !important; font-size: 11px !important; border-radius: 7px !important; }
+.reserv-actions { border-top: 1px solid var(--o-rob) !important; }
 
 /* ---------- prazna stanja ---------- */
 .empty {

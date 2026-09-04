@@ -6,214 +6,199 @@
   <title>Ornament Spa — Admin</title>
   <style>
     :root {
-      --brand: #824D88;
-      --brand-dark: #6a3d70;
-      --brand-light: #f3eaf4;
-      --brand-muted: rgba(130,77,136,0.12);
-      --bg: #f7f3f8;
-      --card: #ffffff;
-      --text: #2d1f30;
-      --muted: #8a7a8d;
-      --border: #e8dde9;
-      --green: #2e7d32;
-      --green-bg: #e8f5e9;
-      --yellow: #f57f17;
-      --yellow-bg: #fff8e1;
-      --red: #c62828;
-      --red-bg: #ffebee;
-      --shadow: 0 2px 12px rgba(130,77,136,0.10);
-      --shadow-lg: 0 8px 32px rgba(130,77,136,0.14);
-      --radius: 14px;
+      --brand: #824D88; --brand-dark: #6a3d70; --brand-light: #f3eaf4; --brand-muted: rgba(130,77,136,0.12);
+      --bg: #f7f3f8; --card: #ffffff; --text: #2d1f30; --muted: #8a7a8d; --border: #e8dde9;
+      --green: #2e7d32; --green-bg: #e8f5e9; --yellow: #f57f17; --yellow-bg: #fff8e1;
+      --red: #c62828; --red-bg: #ffebee; --shadow: 0 2px 12px rgba(130,77,136,0.10);
+      --shadow-lg: 0 8px 32px rgba(130,77,136,0.14); --radius: 14px;
     }
     *, *::before, *::after { box-sizing: border-box; }
     body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
     /* ── LAYOUT ── */
     .layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
-    @media (max-width: 768px) { .layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
 
     /* ── SIDEBAR ── */
-    .sidebar {
-      background: linear-gradient(180deg, #824D88 0%, #5c3464 100%);
-      color: #fff;
-      padding: 0;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar-brand {
-      padding: 24px 20px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-    }
-    .sidebar-brand img { width: 48px; height: 48px; object-fit: contain; filter: brightness(0) invert(1); margin-bottom: 8px; display: block; }
-    .sidebar-brand h2 { margin: 0; font-size: 16px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
-    .sidebar-brand p { margin: 2px 0 0; font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
-    .sidebar-nav { padding: 12px 0; flex: 1; }
-    .nav-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 11px 20px; cursor: pointer; font-size: 14px;
-      color: rgba(255,255,255,0.75); transition: all 0.15s;
-      border-left: 3px solid transparent;
-    }
-    .nav-item:hover { background: rgba(255,255,255,0.08); color: #fff; }
-    .nav-item.active { background: rgba(255,255,255,0.15); color: #fff; border-left-color: #fff; font-weight: 600; }
-    .nav-item svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
-    .sidebar-footer { padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: rgba(255,255,255,0.45); }
+    .sidebar { background: linear-gradient(180deg,#824D88 0%,#5c3464 100%); color:#fff; padding:0; position:sticky; top:0; height:100vh; overflow-y:auto; display:flex; flex-direction:column; }
+    .sidebar-brand { padding:24px 20px 20px; border-bottom:1px solid rgba(255,255,255,0.12); }
+    .sidebar-brand img { width:48px; height:48px; object-fit:contain; filter:brightness(0) invert(1); margin-bottom:8px; display:block; }
+    .sidebar-brand h2 { margin:0; font-size:16px; font-weight:700; color:#fff; letter-spacing:0.3px; }
+    .sidebar-brand p { margin:2px 0 0; font-size:11px; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:1px; }
+    .sidebar-nav { padding:12px 0; flex:1; }
+    .nav-item { display:flex; align-items:center; gap:10px; padding:11px 20px; cursor:pointer; font-size:14px; color:rgba(255,255,255,0.75); transition:all 0.15s; border-left:3px solid transparent; position:relative; }
+    .nav-item:hover { background:rgba(255,255,255,0.08); color:#fff; }
+    .nav-item.active { background:rgba(255,255,255,0.15); color:#fff; border-left-color:#fff; font-weight:600; }
+    .nav-item svg { width:18px; height:18px; fill:currentColor; flex-shrink:0; }
+    .nav-badge { position:absolute; right:16px; background:#ef5350; color:#fff; font-size:11px; font-weight:700; border-radius:12px; padding:2px 7px; min-width:20px; text-align:center; display:none; }
+    .nav-badge.visible { display:block; }
+    .sidebar-footer { padding:16px 20px; border-top:1px solid rgba(255,255,255,0.1); font-size:12px; color:rgba(255,255,255,0.45); }
 
     /* ── MAIN ── */
-    .main { padding: 28px 32px; overflow-x: hidden; }
-    @media (max-width: 600px) { .main { padding: 16px; } }
-    .page { display: none; }
-    .page.active { display: block; }
+    .main { padding:28px 32px; overflow-x:hidden; }
+    @media (max-width:600px) { .main { padding:16px; } }
+    .page { display:none; }
+    .page.active { display:block; }
 
-    .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-    .page-header h1 { margin: 0; font-size: 22px; font-weight: 700; color: var(--text); }
-    .page-header .subtitle { font-size: 13px; color: var(--muted); margin: 2px 0 0; }
+    .page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+    .page-header h1 { margin:0; font-size:22px; font-weight:700; }
+    .subtitle { font-size:13px; color:var(--muted); margin:2px 0 0; }
 
-    /* ── KPI CARDS ── */
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
-    .kpi-card {
-      background: var(--card); border-radius: var(--radius); padding: 20px;
-      box-shadow: var(--shadow); border: 1px solid var(--border);
-      position: relative; overflow: hidden;
-    }
-    .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--brand), var(--brand-dark)); }
-    .kpi-card .kpi-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--brand-light); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-    .kpi-card .kpi-icon svg { width: 18px; height: 18px; fill: var(--brand); }
-    .kpi-card .kpi-value { font-size: 30px; font-weight: 800; color: var(--text); line-height: 1; }
-    .kpi-card .kpi-label { font-size: 12px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    /* ── KPI ── */
+    .kpi-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:14px; margin-bottom:24px; }
+    .kpi-card { background:var(--card); border-radius:var(--radius); padding:18px 20px; box-shadow:var(--shadow); border:1px solid var(--border); position:relative; overflow:hidden; }
+    .kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--brand),var(--brand-dark)); }
+    .kpi-icon { width:34px; height:34px; border-radius:10px; background:var(--brand-light); display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+    .kpi-icon svg { width:17px; height:17px; fill:var(--brand); }
+    .kpi-value { font-size:28px; font-weight:800; color:var(--text); line-height:1; }
+    .kpi-label { font-size:11px; color:var(--muted); margin-top:4px; text-transform:uppercase; letter-spacing:0.5px; }
+    .kpi-urgent { background:var(--yellow-bg); border-color:#ffc107; }
+    .kpi-urgent::before { background:linear-gradient(90deg,var(--yellow),#ff8f00); }
+    .kpi-urgent .kpi-icon { background:#fff8e1; }
+    .kpi-urgent .kpi-icon svg { fill:var(--yellow); }
+    .kpi-urgent .kpi-value { color:var(--yellow); }
+
+    /* ── URGENT SECTION ── */
+    .urgent-section { background:var(--yellow-bg); border:1px solid #ffc107; border-radius:var(--radius); padding:16px 20px; margin-bottom:22px; display:none; }
+    .urgent-section.visible { display:block; }
+    .urgent-header { display:flex; align-items:center; gap:8px; font-weight:700; font-size:14px; color:var(--yellow); margin-bottom:12px; }
+    .urgent-header svg { width:18px; height:18px; fill:var(--yellow); }
 
     /* ── SECTION ── */
-    .section { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 24px; }
-    .section-header { padding: 18px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-    .section-header h2 { margin: 0; font-size: 15px; font-weight: 700; }
-    .section-body { padding: 16px 20px; }
-
-    /* ── FILTERS ── */
-    .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-    .filter-select {
-      border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px;
-      font-size: 13px; color: var(--text); background: #fff; cursor: pointer;
-      outline: none; transition: border-color 0.15s;
-    }
-    .filter-select:focus { border-color: var(--brand); }
-    .search-input {
-      border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px;
-      font-size: 13px; color: var(--text); background: #fff; outline: none;
-      transition: border-color 0.15s; min-width: 180px;
-    }
-    .search-input:focus { border-color: var(--brand); }
-
-    /* ── RESERVATIONS TABLE ── */
-    .reserv-list { display: flex; flex-direction: column; gap: 10px; }
-    .reserv-card {
-      border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px;
-      background: #fff; transition: box-shadow 0.15s; cursor: pointer;
-    }
-    .reserv-card:hover { box-shadow: 0 4px 16px rgba(130,77,136,0.10); }
-    .reserv-card-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-    .reserv-name { font-weight: 700; font-size: 14px; }
-    .reserv-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
-    .reserv-meta a { color: var(--brand); text-decoration: none; }
-    .reserv-service { font-size: 12px; color: var(--brand); background: var(--brand-light); padding: 3px 9px; border-radius: 20px; margin-top: 6px; display: inline-block; }
-    .reserv-note { font-size: 12px; color: #555; margin-top: 6px; font-style: italic; }
-    .reserv-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
-
-    /* ── BADGES ── */
-    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
-    .badge-caka { background: var(--yellow-bg); color: var(--yellow); }
-    .badge-potrjeno { background: var(--green-bg); color: var(--green); }
-    .badge-zavrnjeno { background: var(--red-bg); color: var(--red); }
-    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .section { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid var(--border); margin-bottom:22px; }
+    .section-header { padding:16px 20px 12px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+    .section-header h2 { margin:0; font-size:15px; font-weight:700; }
+    .section-body { padding:16px 20px; }
 
     /* ── BUTTONS ── */
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
-    .btn svg { width: 14px; height: 14px; fill: currentColor; }
-    .btn-primary { background: var(--brand); color: #fff; }
-    .btn-primary:hover { background: var(--brand-dark); }
-    .btn-ghost { background: transparent; color: var(--brand); border: 1px solid var(--brand-light); }
-    .btn-ghost:hover { background: var(--brand-light); }
-    .btn-success { background: var(--green-bg); color: var(--green); }
-    .btn-success:hover { background: #c8e6c9; }
-    .btn-danger { background: var(--red-bg); color: var(--red); }
-    .btn-danger:hover { background: #ffcdd2; }
-    .btn-sm { padding: 5px 10px; font-size: 12px; }
+    .btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; border:none; transition:all 0.15s; }
+    .btn svg { width:14px; height:14px; fill:currentColor; }
+    .btn-primary { background:var(--brand); color:#fff; }
+    .btn-primary:hover { background:var(--brand-dark); }
+    .btn-ghost { background:transparent; color:var(--brand); border:1px solid var(--border); }
+    .btn-ghost:hover { background:var(--brand-light); }
+    .btn-success { background:var(--green-bg); color:var(--green); }
+    .btn-success:hover { background:#c8e6c9; }
+    .btn-danger { background:var(--red-bg); color:var(--red); }
+    .btn-danger:hover { background:#ffcdd2; }
+    .btn-warning { background:var(--yellow-bg); color:var(--yellow); }
+    .btn-sm { padding:5px 10px; font-size:12px; border-radius:6px; }
+    .btn-xs { padding:3px 8px; font-size:11px; border-radius:6px; }
 
-    /* ── CALENDAR STRIP ── */
-    .cal-strip { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
-    .cal-day {
-      flex-shrink: 0; width: 52px; border-radius: 12px; padding: 10px 4px;
-      text-align: center; cursor: pointer; border: 1px solid var(--border);
-      transition: all 0.15s; background: #fff;
-    }
-    .cal-day:hover { border-color: var(--brand); background: var(--brand-light); }
-    .cal-day.active { background: var(--brand); color: #fff; border-color: var(--brand); }
-    .cal-day .day-name { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; }
-    .cal-day .day-num { font-size: 18px; font-weight: 700; margin: 2px 0; }
-    .cal-day .day-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand); margin: 0 auto; }
-    .cal-day.active .day-dot { background: rgba(255,255,255,0.7); }
+    /* ── FILTERS ── */
+    .filter-bar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .filter-select { border:1px solid var(--border); border-radius:8px; padding:7px 12px; font-size:13px; color:var(--text); background:#fff; cursor:pointer; outline:none; transition:border-color 0.15s; }
+    .filter-select:focus { border-color:var(--brand); }
+    .search-input { border:1px solid var(--border); border-radius:8px; padding:7px 12px; font-size:13px; color:var(--text); background:#fff; outline:none; transition:border-color 0.15s; min-width:180px; }
+    .search-input:focus { border-color:var(--brand); }
 
-    /* ── EMPTY STATE ── */
-    .empty { text-align: center; padding: 40px 20px; color: var(--muted); }
-    .empty svg { width: 48px; height: 48px; fill: var(--brand-light); margin-bottom: 12px; }
-    .empty p { margin: 4px 0 0; font-size: 14px; }
+    /* ── RESERVATION CARDS ── */
+    .reserv-list { display:flex; flex-direction:column; gap:8px; }
+    .reserv-card { border:1px solid var(--border); border-radius:12px; padding:14px 16px; background:#fff; transition:box-shadow 0.15s; }
+    .reserv-card:hover { box-shadow:0 4px 16px rgba(130,77,136,0.10); }
+    .reserv-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+    .reserv-card-left { flex:1; }
+    .reserv-name { font-weight:700; font-size:14px; }
+    .reserv-meta { font-size:12px; color:var(--muted); margin-top:3px; }
+    .reserv-meta a { color:var(--brand); text-decoration:none; }
+    .reserv-service { font-size:12px; color:var(--brand); background:var(--brand-light); padding:3px 9px; border-radius:20px; display:inline-block; margin-top:5px; }
+    .reserv-note { font-size:12px; color:#555; margin-top:5px; font-style:italic; }
+    .reserv-admin-note { font-size:12px; color:var(--brand-dark); margin-top:4px; background:var(--brand-light); padding:4px 8px; border-radius:6px; }
+    .reserv-actions { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; padding-top:10px; border-top:1px solid var(--border); align-items:center; }
+    .reserv-ts { font-size:11px; color:#bbb; }
+
+    /* ── BADGES ── */
+    .badge { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.4px; white-space:nowrap; }
+    .badge-dot { width:6px; height:6px; border-radius:50%; background:currentColor; }
+    .badge-caka { background:var(--yellow-bg); color:var(--yellow); }
+    .badge-potrjeno { background:var(--green-bg); color:var(--green); }
+    .badge-zavrnjeno { background:var(--red-bg); color:var(--red); }
+
+    /* ── FULL CALENDAR ── */
+    .cal-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+    .cal-nav h2 { margin:0; font-size:17px; font-weight:700; }
+    .cal-nav-btns { display:flex; gap:6px; }
+    .cal-grid-header { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; margin-bottom:4px; }
+    .cal-grid-header div { text-align:center; font-size:11px; font-weight:600; color:var(--muted); padding:6px 0; text-transform:uppercase; letter-spacing:0.5px; }
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+    .cal-cell { min-height:72px; background:#fff; border:1px solid var(--border); border-radius:10px; padding:8px 6px; cursor:pointer; transition:all 0.15s; position:relative; }
+    .cal-cell:hover { border-color:var(--brand); background:var(--brand-light); }
+    .cal-cell.today { border-color:var(--brand); background:var(--brand-light); }
+    .cal-cell.today .cal-date { color:var(--brand); font-weight:700; }
+    .cal-cell.selected { background:var(--brand); border-color:var(--brand-dark); }
+    .cal-cell.selected .cal-date { color:#fff; font-weight:700; }
+    .cal-cell.other-month { background:#fafafa; opacity:0.5; }
+    .cal-cell.other-month:hover { opacity:0.8; }
+    .cal-date { font-size:13px; font-weight:500; color:var(--text); margin-bottom:4px; }
+    .cal-dots { display:flex; flex-wrap:wrap; gap:3px; margin-top:2px; }
+    .cal-dot { width:7px; height:7px; border-radius:50%; }
+    .cal-dot-caka { background:var(--yellow); }
+    .cal-dot-potrjeno { background:var(--green); }
+    .cal-dot-zavrnjeno { background:var(--red); }
+    .cal-count { font-size:10px; font-weight:600; color:var(--brand); background:var(--brand-light); padding:1px 5px; border-radius:10px; margin-top:2px; display:inline-block; }
+    .cal-cell.selected .cal-count { background:rgba(255,255,255,0.3); color:#fff; }
+    @media (max-width:600px) { .cal-cell { min-height:48px; padding:5px 3px; } .cal-date { font-size:11px; } }
+
+    /* ── CHARTS ── */
+    .chart-bars { display:flex; flex-direction:column; gap:10px; }
+    .chart-bar-item { display:flex; align-items:center; gap:10px; }
+    .chart-bar-label { font-size:12px; color:var(--muted); min-width:110px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; }
+    .chart-bar-track { flex:1; background:var(--brand-light); border-radius:4px; height:8px; overflow:hidden; }
+    .chart-bar-fill { height:100%; background:linear-gradient(90deg,var(--brand),var(--brand-dark)); border-radius:4px; transition:width 0.6s ease; }
+    .chart-bar-count { font-size:12px; font-weight:600; min-width:24px; text-align:right; }
+
+    /* ── CONVERSATIONS ── */
+    .conv-item { border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin-bottom:8px; font-size:13px; }
+    .conv-session { font-size:11px; color:var(--brand); font-weight:600; margin-bottom:4px; }
+    .conv-q { color:var(--muted); font-size:12px; }
+    .conv-q::before { content:'Obiskovalec: '; font-weight:600; }
+    .conv-a { color:var(--text); margin-top:5px; }
+    .conv-a::before { content:'Bot: '; font-weight:600; color:var(--brand); }
+    .conv-ts { font-size:11px; color:#bbb; margin-top:5px; }
 
     /* ── MODAL ── */
-    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
-    .modal-backdrop.open { display: flex; }
-    .modal { background: #fff; border-radius: var(--radius); width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
-    .modal-header { padding: 20px 20px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .modal-header h3 { margin: 0; font-size: 16px; }
-    .modal-close { background: none; border: none; cursor: pointer; color: var(--muted); font-size: 20px; line-height: 1; padding: 4px; }
-    .modal-body { padding: 20px; }
-    .modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+    .modal-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:1000; align-items:center; justify-content:center; padding:20px; }
+    .modal-backdrop.open { display:flex; }
+    .modal { background:#fff; border-radius:var(--radius); width:100%; max-width:460px; max-height:85vh; overflow-y:auto; box-shadow:var(--shadow-lg); }
+    .modal-header { padding:18px 20px 14px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .modal-header h3 { margin:0; font-size:16px; font-weight:700; }
+    .modal-close { background:none; border:none; cursor:pointer; color:var(--muted); font-size:20px; line-height:1; padding:4px; }
+    .modal-body { padding:20px; }
+    .modal-footer { padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; }
+    .form-group { margin-bottom:14px; }
+    .form-group label { display:block; font-size:12px; font-weight:600; color:#555; margin-bottom:5px; }
+    .form-group input, .form-group textarea, .form-group select { width:100%; border:1px solid var(--border); border-radius:8px; padding:9px 12px; font-size:14px; outline:none; transition:border-color 0.15s; font-family:inherit; }
+    .form-group input:focus, .form-group textarea:focus { border-color:var(--brand); }
+    .form-group textarea { resize:vertical; min-height:80px; }
 
-    /* ── FORM ── */
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%; border: 1px solid var(--border); border-radius: 8px;
-      padding: 9px 12px; font-size: 14px; outline: none; transition: border-color 0.15s;
-      font-family: inherit; background: #fff;
-    }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--brand); }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-
-    /* ── CHART BAR ── */
-    .chart-bars { display: flex; flex-direction: column; gap: 10px; }
-    .chart-bar-item { display: flex; align-items: center; gap: 10px; }
-    .chart-bar-label { font-size: 12px; color: var(--muted); min-width: 120px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
-    .chart-bar-track { flex: 1; background: var(--brand-light); border-radius: 4px; height: 8px; overflow: hidden; }
-    .chart-bar-fill { height: 100%; background: linear-gradient(90deg, var(--brand), var(--brand-dark)); border-radius: 4px; transition: width 0.6s ease; }
-    .chart-bar-count { font-size: 12px; font-weight: 600; color: var(--text); min-width: 24px; text-align: right; }
-
-    /* ── CONV ── */
-    .conv-item { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; margin-bottom: 10px; font-size: 13px; }
-    .conv-q { color: var(--muted); }
-    .conv-a { color: var(--text); margin-top: 6px; }
-    .conv-ts { font-size: 11px; color: #bbb; margin-top: 6px; }
+    /* ── EMPTY / LOADING ── */
+    .empty { text-align:center; padding:40px 20px; color:var(--muted); }
+    .empty svg { width:44px; height:44px; fill:var(--brand-light); margin-bottom:10px; display:block; margin-left:auto; margin-right:auto; }
+    .loading { text-align:center; padding:40px; color:var(--muted); }
+    .spin { display:inline-block; width:26px; height:26px; border:3px solid var(--brand-light); border-top-color:var(--brand); border-radius:50%; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
     /* ── LOGIN ── */
-    #login-screen {
-      position: fixed; inset: 0; background: linear-gradient(135deg, #824D88 0%, #5c3464 100%);
-      display: flex; align-items: center; justify-content: center; z-index: 9999;
-    }
-    .login-box { background: #fff; border-radius: 20px; padding: 40px 36px; width: 100%; max-width: 360px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
-    .login-box img { width: 72px; height: 72px; object-fit: contain; margin-bottom: 16px; }
-    .login-box h1 { font-size: 22px; font-weight: 800; color: var(--brand); margin: 0 0 4px; }
-    .login-box p { font-size: 13px; color: var(--muted); margin: 0 0 24px; }
-    .login-input { width: 100%; border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 15px; outline: none; text-align: center; letter-spacing: 2px; transition: border-color 0.15s; }
-    .login-input:focus { border-color: var(--brand); }
-    .login-btn { width: 100%; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); color: #fff; border: none; border-radius: 10px; padding: 13px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 12px; transition: opacity 0.15s; }
-    .login-btn:hover { opacity: 0.9; }
-    .login-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+    #login-screen { position:fixed; inset:0; background:linear-gradient(135deg,#824D88 0%,#5c3464 100%); display:flex; align-items:center; justify-content:center; z-index:9999; }
+    .login-box { background:#fff; border-radius:20px; padding:40px 36px; width:100%; max-width:360px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.25); }
+    .login-box img { height:56px; width:auto; max-width:200px; object-fit:contain; margin-bottom:16px; }
+    .login-box h1 { font-size:20px; font-weight:800; color:var(--brand); margin:0 0 4px; }
+    .login-box p { font-size:13px; color:var(--muted); margin:0 0 24px; }
+    .login-input { width:100%; border:1.5px solid var(--border); border-radius:10px; padding:12px 14px; font-size:15px; outline:none; text-align:center; letter-spacing:2px; transition:border-color 0.15s; }
+    .login-input:focus { border-color:var(--brand); }
+    .login-btn { width:100%; background:linear-gradient(135deg,var(--brand),var(--brand-dark)); color:#fff; border:none; border-radius:10px; padding:13px; font-size:15px; font-weight:700; cursor:pointer; margin-top:12px; transition:opacity 0.15s; }
+    .login-btn:hover { opacity:0.9; }
+    .login-error { color:var(--red); font-size:13px; margin-top:10px; display:none; }
 
-    .loading { text-align: center; padding: 40px; color: var(--muted); }
-    .spin { display: inline-block; width: 28px; height: 28px; border: 3px solid var(--brand-light); border-top-color: var(--brand); border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* ── NOTE INLINE EDIT ── */
+    .inline-note-form { display:none; margin-top:8px; }
+    .inline-note-form.open { display:flex; gap:6px; }
+    .inline-note-input { flex:1; border:1px solid var(--border); border-radius:6px; padding:6px 10px; font-size:12px; font-family:inherit; outline:none; }
+    .inline-note-input:focus { border-color:var(--brand); }
+
+    /* ── 2-col grid ── */
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; }
+    @media (max-width:700px) { .grid-2 { grid-template-columns:1fr; } }
   </style>
   <link rel="stylesheet" href="/static/ornament_admin_theme.css">
 </head>
@@ -222,12 +207,12 @@
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
-    <img src="/static/logo_dark.png" alt="Ornament Spa" style="width:160px;height:auto;" onerror="this.style.display='none'">
+    <img src="/static/logo_dark.png" alt="Ornament Spa" onerror="this.style.display='none'">
     <h1>Ornament Spa</h1>
     <p>Admin panel — Wellness rezervacije</p>
     <input class="login-input" type="password" id="login-key" placeholder="••••••••" autocomplete="current-password">
     <button class="login-btn" onclick="doLogin()">Prijava</button>
-    <div class="login-error" id="login-error">Napacno geslo. Poskusite znova.</div>
+    <div class="login-error" id="login-error">Napačno geslo. Poskusite znova.</div>
   </div>
 </div>
 
@@ -245,10 +230,12 @@
       <div class="nav-item active" data-page="dashboard">
         <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
         Pregled
+        <span class="nav-badge" id="badge-dashboard"></span>
       </div>
       <div class="nav-item" data-page="reservations">
         <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
         Rezervacije
+        <span class="nav-badge" id="badge-reservations"></span>
       </div>
       <div class="nav-item" data-page="calendar">
         <svg viewBox="0 0 24 24"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
@@ -266,7 +253,7 @@
     <div class="sidebar-footer">Ornament Spa AI &copy; 2026<br>spoznaj-ai.si</div>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="main">
 
     <!-- DASHBOARD -->
@@ -281,17 +268,47 @@
           Osveži
         </button>
       </div>
-      <div class="kpi-grid" id="kpi-grid">
-        <div class="kpi-card"><div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div><div class="kpi-value">—</div><div class="kpi-label">Danes</div></div>
-        <div class="kpi-card"><div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div><div class="kpi-value">—</div><div class="kpi-label">Ta teden</div></div>
-        <div class="kpi-card"><div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg></div><div class="kpi-value">—</div><div class="kpi-label">Ta mesec</div></div>
-        <div class="kpi-card"><div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div><div class="kpi-value">—</div><div class="kpi-label">Skupaj</div></div>
+
+      <!-- Urgent: čakajo na odgovor -->
+      <div class="urgent-section" id="urgent-section">
+        <div class="urgent-header">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          Čakajo na obdelavo
+        </div>
+        <div class="reserv-list" id="urgent-list"></div>
       </div>
 
-      <!-- Status donut & service breakdown side by side -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+      <div class="kpi-grid" id="kpi-grid">
+        <div class="kpi-card kpi-urgent">
+          <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+          <div class="kpi-value" id="kpi-caka">—</div>
+          <div class="kpi-label">Čaka odgovor</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div>
+          <div class="kpi-value" id="kpi-danes">—</div>
+          <div class="kpi-label">Danes</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+          <div class="kpi-value" id="kpi-teden">—</div>
+          <div class="kpi-label">Ta teden</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg></div>
+          <div class="kpi-value" id="kpi-mesec">—</div>
+          <div class="kpi-label">Ta mesec</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div>
+          <div class="kpi-value" id="kpi-skupaj">—</div>
+          <div class="kpi-label">Skupaj</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
         <div class="section">
-          <div class="section-header"><h2>Status rezervacij</h2></div>
+          <div class="section-header"><h2>Status</h2></div>
           <div class="section-body" id="status-bars"><div class="loading"><div class="spin"></div></div></div>
         </div>
         <div class="section">
@@ -300,22 +317,19 @@
         </div>
       </div>
 
-      <!-- Recent reservations -->
       <div class="section">
         <div class="section-header">
           <h2>Zadnje rezervacije</h2>
           <button class="btn btn-ghost btn-sm" onclick="navTo('reservations')">Vse &rarr;</button>
         </div>
-        <div class="section-body">
-          <div class="reserv-list" id="dash-recent"></div>
-        </div>
+        <div class="section-body"><div class="reserv-list" id="dash-recent"></div></div>
       </div>
     </div>
 
     <!-- RESERVATIONS -->
     <div class="page" id="page-reservations">
       <div class="page-header">
-        <div><h1>Rezervacije</h1><div class="subtitle">Vse zahteve za rezervacijo</div></div>
+        <div><h1>Rezervacije</h1><div class="subtitle" id="reserv-count">Vse</div></div>
         <button class="btn btn-primary" onclick="loadReservations()">
           <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
           Osveži
@@ -324,15 +338,15 @@
       <div class="section">
         <div class="section-header">
           <div class="filter-bar">
-            <input class="search-input" type="text" id="search-input" placeholder="Iskanje po imenu..." oninput="filterReservations()">
+            <input class="search-input" type="text" id="search-input" placeholder="Iskanje..." oninput="filterReservations()">
             <select class="filter-select" id="filter-status" onchange="loadReservations()">
               <option value="">Vsi statusi</option>
-              <option value="caka">Caka</option>
+              <option value="caka">Čaka</option>
               <option value="potrjeno">Potrjeno</option>
               <option value="zavrnjeno">Zavrnjeno</option>
             </select>
             <select class="filter-select" id="filter-hours" onchange="loadReservations()">
-              <option value="0">Vsi casi</option>
+              <option value="0">Vsi časi</option>
               <option value="24">Zadnjih 24h</option>
               <option value="168">Zadnjih 7 dni</option>
               <option value="720">Zadnjih 30 dni</option>
@@ -348,30 +362,43 @@
     <!-- CALENDAR -->
     <div class="page" id="page-calendar">
       <div class="page-header">
-        <div><h1>Kalendar</h1><div class="subtitle">Rezervacije po dnevih</div></div>
+        <div><h1>Kalendar</h1><div class="subtitle">Mesečni pregled rezervacij</div></div>
       </div>
       <div class="section" style="margin-bottom:20px;">
         <div class="section-body">
-          <div class="cal-strip" id="cal-strip"></div>
+          <div class="cal-nav">
+            <div class="cal-nav-btns">
+              <button class="btn btn-ghost btn-sm" onclick="calPrevMonth()">&#8592;</button>
+              <button class="btn btn-ghost btn-sm" onclick="calToday()">Danes</button>
+              <button class="btn btn-ghost btn-sm" onclick="calNextMonth()">&#8594;</button>
+            </div>
+            <h2 id="cal-month-title">—</h2>
+            <div style="width:120px;"></div>
+          </div>
+          <div class="cal-grid-header">
+            <div>Pon</div><div>Tor</div><div>Sri</div><div>Čet</div><div>Pet</div><div>Sob</div><div>Ned</div>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
         </div>
       </div>
-      <div class="section">
-        <div class="section-header"><h2 id="cal-day-title">Izberi dan</h2></div>
-        <div class="section-body">
-          <div class="reserv-list" id="cal-reserv-list"><div class="empty"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5z"/></svg><p>Klikni na dan za prikaz.</p></div></div>
-        </div>
+      <div class="section" id="cal-day-section" style="display:none;">
+        <div class="section-header"><h2 id="cal-day-title">—</h2></div>
+        <div class="section-body"><div class="reserv-list" id="cal-reserv-list"></div></div>
       </div>
     </div>
 
     <!-- CONVERSATIONS -->
     <div class="page" id="page-conversations">
       <div class="page-header">
-        <div><h1>Pogovori</h1><div class="subtitle">Sporocila AI chatbota</div></div>
-        <select class="filter-select" id="conv-hours" onchange="loadConversations()">
-          <option value="24">Zadnjih 24h</option>
-          <option value="48">Zadnjih 48h</option>
-          <option value="168">Zadnjih 7 dni</option>
-        </select>
+        <div><h1>Pogovori</h1><div class="subtitle">Sporočila AI chatbota z obiskovalci</div></div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input class="search-input" type="text" id="conv-search" placeholder="Iskanje..." oninput="filterConversations()" style="min-width:140px;">
+          <select class="filter-select" id="conv-hours" onchange="loadConversations()">
+            <option value="24">Zadnjih 24h</option>
+            <option value="48">Zadnjih 48h</option>
+            <option value="168">Zadnjih 7 dni</option>
+          </select>
+        </div>
       </div>
       <div class="section">
         <div class="section-body" id="conv-list"><div class="loading"><div class="spin"></div></div></div>
@@ -382,15 +409,21 @@
     <div class="page" id="page-analytics">
       <div class="page-header">
         <div><h1>Analitika</h1><div class="subtitle">Statistika in trendi</div></div>
+        <button class="btn btn-primary" onclick="loadAnalytics()">
+          <svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+          Osveži
+        </button>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px;" id="analytics-kpi"></div>
-      <div class="section">
-        <div class="section-header"><h2>Storitve — porazdelitev</h2></div>
-        <div class="section-body" id="analytics-services"><div class="loading"><div class="spin"></div></div></div>
-      </div>
-      <div class="section">
-        <div class="section-header"><h2>Statusi</h2></div>
-        <div class="section-body" id="analytics-statuses"><div class="loading"><div class="spin"></div></div></div>
+      <div class="kpi-grid" id="analytics-kpi" style="margin-bottom:22px;"></div>
+      <div class="grid-2">
+        <div class="section">
+          <div class="section-header"><h2>Storitve</h2></div>
+          <div class="section-body" id="analytics-services"><div class="loading"><div class="spin"></div></div></div>
+        </div>
+        <div class="section">
+          <div class="section-header"><h2>Statusi</h2></div>
+          <div class="section-body" id="analytics-statuses"><div class="loading"><div class="spin"></div></div></div>
+        </div>
       </div>
     </div>
 
@@ -412,31 +445,33 @@
 <script>
 var ADMIN_KEY = '';
 var allReservations = [];
+var allConversations = [];
 var statsCache = null;
+var calYear = new Date().getFullYear();
+var calMonth = new Date().getMonth();
 
+// ── LOGIN ──────────────────────────────────────────────────────────────────
 function doLogin() {
   var k = document.getElementById('login-key').value.trim();
   if (!k) return;
   fetch('/api/admin/stats?key=' + encodeURIComponent(k))
-    .then(function(r) {
-      if (!r.ok) throw new Error('unauth');
-      return r.json();
-    })
+    .then(function(r) { if (!r.ok) throw new Error('unauth'); return r.json(); })
     .then(function() {
       ADMIN_KEY = k;
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('app').style.display = 'grid';
       refreshAll();
-      buildCalStrip();
+      buildCalGrid();
     })
     .catch(function() {
-      document.getElementById('login-error').style.display = 'block';
+      var err = document.getElementById('login-error');
+      err.style.display = 'block';
+      err.textContent = 'Napačno geslo. Poskusite znova.';
     });
 }
-
 document.getElementById('login-key').addEventListener('keypress', function(e) { if (e.key === 'Enter') doLogin(); });
 
-// ── NAVIGATION ──────────────────────────────────────────────────────────────
+// ── NAVIGATION ─────────────────────────────────────────────────────────────
 function navTo(page) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
@@ -446,65 +481,87 @@ function navTo(page) {
   if (page === 'reservations') loadReservations();
   if (page === 'conversations') loadConversations();
   if (page === 'analytics') loadAnalytics();
+  if (page === 'calendar') { buildCalGrid(); loadCalReservations(); }
 }
-
 document.querySelectorAll('.nav-item').forEach(function(el) {
   el.addEventListener('click', function() { navTo(el.dataset.page); });
 });
 
-// ── REFRESH ──────────────────────────────────────────────────────────────────
+// ── REFRESH ─────────────────────────────────────────────────────────────────
 function refreshAll() {
   loadStats();
   loadRecentReservations();
 }
 
-// ── STATS ─────────────────────────────────────────────────────────────────────
+// ── STATS ────────────────────────────────────────────────────────────────────
 function loadStats() {
   fetch('/api/admin/stats?key=' + encodeURIComponent(ADMIN_KEY))
     .then(function(r) { return r.json(); })
     .then(function(data) {
       statsCache = data;
-      var cards = document.querySelectorAll('#kpi-grid .kpi-card');
-      var vals = [data.danes, data.teden, data.mesec, data.skupaj];
-      cards.forEach(function(c, i) { c.querySelector('.kpi-value').textContent = vals[i]; });
-      document.getElementById('dash-subtitle').textContent = 'Skupaj ' + data.skupaj + ' rezervacij';
+      var caka = data.statusi.caka || 0;
+      document.getElementById('kpi-caka').textContent = caka;
+      document.getElementById('kpi-danes').textContent = data.danes;
+      document.getElementById('kpi-teden').textContent = data.teden;
+      document.getElementById('kpi-mesec').textContent = data.mesec;
+      document.getElementById('kpi-skupaj').textContent = data.skupaj;
+      document.getElementById('dash-subtitle').textContent = 'Skupaj ' + data.skupaj + ' rezervacij' + (caka ? ', ' + caka + ' čaka' : '');
 
-      // Status bars
+      // nav badges
+      var bd = document.getElementById('badge-dashboard');
+      var br = document.getElementById('badge-reservations');
+      if (caka > 0) {
+        bd.textContent = caka; bd.classList.add('visible');
+        br.textContent = caka; br.classList.add('visible');
+      } else {
+        bd.classList.remove('visible');
+        br.classList.remove('visible');
+      }
+
       var total = data.skupaj || 1;
       var statuses = [
-        { key: 'caka', label: 'Caka', count: data.statusi.caka || 0 },
-        { key: 'potrjeno', label: 'Potrjeno', count: data.statusi.potrjeno || 0 },
-        { key: 'zavrnjeno', label: 'Zavrnjeno', count: data.statusi.zavrnjeno || 0 }
+        {label:'Čaka', count:data.statusi.caka||0},
+        {label:'Potrjeno', count:data.statusi.potrjeno||0},
+        {label:'Zavrnjeno', count:data.statusi.zavrnjeno||0}
       ];
       document.getElementById('status-bars').innerHTML = renderBars(statuses, total);
 
-      // Service bars
-      var services = Object.entries(data.storitve || {}).sort(function(a,b){return b[1]-a[1];}).slice(0, 7).map(function(e){ return {key:e[0], label:e[0], count:e[1]}; });
-      var maxSvc = services.length ? Math.max.apply(null, services.map(function(s){return s.count;})) : 1;
+      var services = Object.entries(data.storitve||{}).sort(function(a,b){return b[1]-a[1];}).slice(0,7).map(function(e){return{label:e[0],count:e[1]};});
+      var maxSvc = services.length ? Math.max.apply(null,services.map(function(s){return s.count;})) : 1;
       document.getElementById('service-bars').innerHTML = renderBars(services, maxSvc);
-    })
-    .catch(function(e) { console.error(e); });
+    });
 }
 
 function renderBars(items, total) {
   if (!items.length) return '<div class="empty"><p>Ni podatkov.</p></div>';
   return '<div class="chart-bars">' + items.map(function(s) {
-    var pct = total > 0 ? Math.round(s.count / total * 100) : 0;
-    return '<div class="chart-bar-item"><span class="chart-bar-label">' + s.label + '</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:' + pct + '%"></div></div><span class="chart-bar-count">' + s.count + '</span></div>';
+    var pct = total > 0 ? Math.round(s.count/total*100) : 0;
+    return '<div class="chart-bar-item"><span class="chart-bar-label">' + escHtml(s.label) + '</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:' + pct + '%"></div></div><span class="chart-bar-count">' + s.count + '</span></div>';
   }).join('') + '</div>';
 }
 
-// ── RESERVATIONS ─────────────────────────────────────────────────────────────
+// ── RECENT RESERVATIONS (dashboard) ─────────────────────────────────────────
 function loadRecentReservations() {
-  var url = '/api/admin/inquiries?key=' + encodeURIComponent(ADMIN_KEY) + '&hours=168';
-  fetch(url)
-    .then(function(r) { return r.json(); })
+  fetch('/api/admin/inquiries?key=' + encodeURIComponent(ADMIN_KEY) + '&hours=168')
+    .then(function(r){return r.json();})
     .then(function(data) {
-      var list = (data.inquiries || []).slice(0, 5);
-      document.getElementById('dash-recent').innerHTML = list.length ? list.map(renderReservCard).join('') : emptyState('Ni rezervacij ta teden.');
+      allReservations = data.inquiries || [];
+      var recent = allReservations.slice(0,5);
+      document.getElementById('dash-recent').innerHTML = recent.length ? recent.map(function(r){return renderCard(r,false);}).join('') : emptyState('Ni rezervacij ta teden.');
+      // urgent
+      var pending = allReservations.filter(function(r){return r.status==='caka';});
+      var urgentEl = document.getElementById('urgent-section');
+      var urgentList = document.getElementById('urgent-list');
+      if (pending.length > 0) {
+        urgentEl.classList.add('visible');
+        urgentList.innerHTML = pending.slice(0,3).map(function(r){return renderCard(r,true);}).join('');
+      } else {
+        urgentEl.classList.remove('visible');
+      }
     });
 }
 
+// ── RESERVATIONS PAGE ────────────────────────────────────────────────────────
 function loadReservations() {
   var status = document.getElementById('filter-status').value;
   var hours = document.getElementById('filter-hours').value;
@@ -513,138 +570,243 @@ function loadReservations() {
   if (hours && hours !== '0') url += '&hours=' + hours;
   document.getElementById('reserv-list').innerHTML = '<div class="loading"><div class="spin"></div></div>';
   fetch(url)
-    .then(function(r) { return r.json(); })
+    .then(function(r){return r.json();})
     .then(function(data) {
       allReservations = data.inquiries || [];
       filterReservations();
+      document.getElementById('reserv-count').textContent = allReservations.length + ' rezervacij';
     });
 }
 
 function filterReservations() {
-  var q = (document.getElementById('search-input').value || '').toLowerCase();
+  var q = (document.getElementById('search-input').value||'').toLowerCase();
   var filtered = allReservations.filter(function(r) {
-    return !q || (r.ime || '').toLowerCase().includes(q) || (r.telefon || '').includes(q);
+    return !q || (r.ime||'').toLowerCase().includes(q) || (r.telefon||'').includes(q) || (r.tip||'').toLowerCase().includes(q);
   });
-  document.getElementById('reserv-list').innerHTML = filtered.length ? filtered.map(renderReservCard).join('') : emptyState('Ni rezervacij za ta filter.');
+  document.getElementById('reserv-list').innerHTML = filtered.length ? filtered.map(function(r){return renderCard(r,true);}).join('') : emptyState('Ni rezervacij za ta filter.');
 }
 
-function renderReservCard(r) {
+// ── RENDER CARD ──────────────────────────────────────────────────────────────
+function renderCard(r, showActions) {
   var badge = '<span class="badge badge-' + r.status + '"><span class="badge-dot"></span>' + statusLabel(r.status) + '</span>';
   var service = r.tip && r.tip !== '-' ? '<span class="reserv-service">' + escHtml(r.tip) + '</span>' : '';
-  var note = r.sporocilo && r.sporocilo !== '-' ? '<div class="reserv-note">' + escHtml(r.sporocilo.substring(0, 100)) + '</div>' : '';
-  var adminNote = r.admin_notes ? '<div class="reserv-note" style="color:#824D88;">Admin: ' + escHtml(r.admin_notes.substring(0, 80)) + '</div>' : '';
-  return '<div class="reserv-card" onclick="openDetail(\'' + r.id + '\')">' +
-    '<div class="reserv-card-top"><span class="reserv-name">' + escHtml(r.ime) + '</span>' + badge + '</div>' +
-    '<div class="reserv-meta"><a href="tel:' + escHtml(r.telefon) + '" onclick="event.stopPropagation()">' + escHtml(r.telefon) + '</a>' +
-    (r.email && r.email !== '' ? ' &bull; <a href="mailto:' + escHtml(r.email) + '" onclick="event.stopPropagation()">' + escHtml(r.email) + '</a>' : '') +
-    ' &bull; ' + escHtml(r.created_at) + '</div>' +
-    service + note + adminNote +
-    '</div>';
+  var note = r.sporocilo && r.sporocilo !== '-' ? '<div class="reserv-note">' + escHtml(r.sporocilo.substring(0,120)) + '</div>' : '';
+  var adminNote = r.admin_notes ? '<div class="reserv-admin-note">' + escHtml(r.admin_notes.substring(0,80)) + '</div>' : '';
+  var actions = '';
+  if (showActions) {
+    actions = '<div class="reserv-actions">' +
+      '<span class="reserv-ts">' + escHtml(r.created_at||'') + '</span>' +
+      '<div style="flex:1;"></div>';
+    if (r.status === 'caka') {
+      actions += '<button class="btn btn-success btn-xs" onclick="quickStatus(\'' + r.id + '\',\'potrjeno\',this)">&#10003; Potrdi</button>';
+      actions += '<button class="btn btn-danger btn-xs" onclick="quickStatus(\'' + r.id + '\',\'zavrnjeno\',this)">&#10005; Zavrni</button>';
+    }
+    actions += '<button class="btn btn-ghost btn-xs" onclick="openDetail(\'' + r.id + '\')">Uredi &rarr;</button>';
+    if (r.telefon) actions += '<a href="tel:' + escHtml(r.telefon) + '" class="btn btn-warning btn-xs">&#128222; Pokliči</a>';
+    actions += '</div>';
+    // inline note form
+    actions += '<div class="inline-note-form" id="note-form-' + r.id + '">' +
+      '<input class="inline-note-input" id="note-input-' + r.id + '" placeholder="Opomba..." value="' + escHtml(r.admin_notes||'') + '">' +
+      '<button class="btn btn-primary btn-xs" onclick="saveNote(\'' + r.id + '\')">Shrani</button>' +
+      '</div>';
+    actions += '<button class="btn btn-ghost btn-xs" style="margin-top:4px;" onclick="toggleNote(\'' + r.id + '\')">+ Opomba</button>';
+  } else {
+    actions = '<div class="reserv-actions"><span class="reserv-ts">' + escHtml(r.created_at||'') + '</span>' +
+      '<div style="flex:1;"></div>' +
+      '<button class="btn btn-ghost btn-xs" onclick="navTo(\'reservations\')">Odprto &rarr;</button></div>';
+  }
+  return '<div class="reserv-card" id="card-' + r.id + '">' +
+    '<div class="reserv-card-top">' +
+    '<div class="reserv-card-left"><div class="reserv-name">' + escHtml(r.ime) + '</div>' +
+    '<div class="reserv-meta"><a href="tel:' + escHtml(r.telefon) + '">' + escHtml(r.telefon) + '</a>' +
+    (r.email && r.email !== '' ? ' &bull; <a href="mailto:' + escHtml(r.email) + '">' + escHtml(r.email) + '</a>' : '') + '</div>' +
+    service + note + adminNote + '</div>' +
+    badge + '</div>' + actions + '</div>';
 }
 
-function statusLabel(s) { return s === 'caka' ? 'Caka' : s === 'potrjeno' ? 'Potrjeno' : 'Zavrnjeno'; }
+function statusLabel(s) { return s==='caka' ? 'Čaka' : s==='potrjeno' ? 'Potrjeno' : 'Zavrnjeno'; }
 
 function emptyState(msg) {
   return '<div class="empty"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg><p>' + msg + '</p></div>';
 }
 
-// ── DETAIL MODAL ─────────────────────────────────────────────────────────────
+// ── QUICK STATUS ──────────────────────────────────────────────────────────────
+function quickStatus(id, status, btn) {
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
+  fetch('/api/admin/inquiries/' + id + '?key=' + encodeURIComponent(ADMIN_KEY), {
+    method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({status:status})
+  }).then(function(r){return r.json();}).then(function() {
+    var r = allReservations.find(function(x){return x.id===id;});
+    if (r) r.status = status;
+    // Re-render card in place
+    var card = document.getElementById('card-' + id);
+    if (card) {
+      var onReservPage = document.getElementById('page-reservations').classList.contains('active');
+      card.outerHTML = renderCard(r, onReservPage);
+    }
+    loadStats();
+  });
+}
+
+// ── INLINE NOTE ───────────────────────────────────────────────────────────────
+function toggleNote(id) {
+  var form = document.getElementById('note-form-' + id);
+  if (form) form.classList.toggle('open');
+}
+
+function saveNote(id) {
+  var input = document.getElementById('note-input-' + id);
+  if (!input) return;
+  var note = input.value;
+  fetch('/api/admin/inquiries/' + id + '?key=' + encodeURIComponent(ADMIN_KEY), {
+    method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({admin_notes:note})
+  }).then(function(r){return r.json();}).then(function() {
+    var r = allReservations.find(function(x){return x.id===id;});
+    if (r) r.admin_notes = note;
+    var form = document.getElementById('note-form-' + id);
+    if (form) form.classList.remove('open');
+  });
+}
+
+// ── DETAIL MODAL ──────────────────────────────────────────────────────────────
 function openDetail(id) {
-  var r = allReservations.find(function(x){ return x.id === id; });
-  if (!r) {
-    var url = '/api/admin/inquiries?key=' + encodeURIComponent(ADMIN_KEY);
-    fetch(url).then(function(res){return res.json();}).then(function(data){ allReservations = data.inquiries || []; openDetail(id); });
-    return;
-  }
-  document.getElementById('modal-title').textContent = r.ime + ' — ' + statusLabel(r.status);
+  var r = allReservations.find(function(x){return x.id===id;});
+  if (!r) return;
+  document.getElementById('modal-title').textContent = r.ime;
   document.getElementById('modal-body').innerHTML =
     '<table style="width:100%;font-size:13px;border-collapse:collapse;">' +
-    row('Ime', escHtml(r.ime)) +
-    row('Telefon', '<a href="tel:' + escHtml(r.telefon) + '" style="color:#824D88;">' + escHtml(r.telefon) + '</a>') +
-    (r.email && r.email !== '' ? row('Email', '<a href="mailto:' + escHtml(r.email) + '" style="color:#824D88;">' + escHtml(r.email) + '</a>') : '') +
-    row('Storitev', escHtml(r.tip || '-')) +
-    row('Sporocilo', escHtml(r.sporocilo || '-')) +
-    row('Cas', escHtml(r.created_at)) +
-    row('Status', '<span class="badge badge-' + r.status + '">' + statusLabel(r.status) + '</span>') +
+    mrow('Ime', escHtml(r.ime)) +
+    mrow('Telefon', '<a href="tel:' + escHtml(r.telefon) + '" style="color:var(--brand);">' + escHtml(r.telefon) + '</a>') +
+    (r.email && r.email !== '' ? mrow('Email', '<a href="mailto:' + escHtml(r.email) + '" style="color:var(--brand);">' + escHtml(r.email) + '</a>') : '') +
+    mrow('Storitev', escHtml(r.tip||'-')) +
+    mrow('Sporočilo', escHtml(r.sporocilo||'-')) +
+    mrow('Čas', escHtml(r.created_at)) +
+    mrow('Status', '<span class="badge badge-' + r.status + '">' + statusLabel(r.status) + '</span>') +
     '</table>' +
-    '<div class="form-group" style="margin-top:16px;"><label>Opomba admina</label><textarea id="modal-note" rows="3">' + escHtml(r.admin_notes || '') + '</textarea></div>';
-
+    '<div class="form-group" style="margin-top:16px;"><label>Opomba admina</label><textarea id="modal-note" rows="3">' + escHtml(r.admin_notes||'') + '</textarea></div>';
   document.getElementById('modal-footer').innerHTML =
-    '<button class="btn btn-success btn-sm" onclick="updateStatus(\'' + r.id + '\', \'potrjeno\')">Potrdi</button>' +
-    '<button class="btn btn-danger btn-sm" onclick="updateStatus(\'' + r.id + '\', \'zavrnjeno\')">Zavrni</button>' +
-    '<button class="btn btn-ghost btn-sm" onclick="saveNote(\'' + r.id + '\')">Shrani opombo</button>' +
-    '<button class="btn btn-primary btn-sm" onclick="callClient(\'' + r.telefon + '\')">Pokli&#269;i</button>';
-
+    (r.status==='caka' ? '<button class="btn btn-success btn-sm" onclick="modalStatus(\'' + r.id + '\',\'potrjeno\')">&#10003; Potrdi</button><button class="btn btn-danger btn-sm" onclick="modalStatus(\'' + r.id + '\',\'zavrnjeno\')">&#10005; Zavrni</button>' : '') +
+    '<button class="btn btn-ghost btn-sm" onclick="modalSaveNote(\'' + r.id + '\')">Shrani opombo</button>' +
+    (r.telefon ? '<a href="tel:' + escHtml(r.telefon) + '" class="btn btn-warning btn-sm">&#128222; Pokliči</a>' : '');
   document.getElementById('detail-modal').classList.add('open');
 }
 
-function row(label, val) {
-  return '<tr><td style="padding:7px 0;color:#888;width:100px;vertical-align:top;">' + label + '</td><td style="padding:7px 0;">' + val + '</td></tr>';
+function mrow(label, val) {
+  return '<tr><td style="padding:8px 0;color:#888;width:90px;vertical-align:top;font-size:12px;">' + label + '</td><td style="padding:8px 0;">' + val + '</td></tr>';
 }
 
 function closeModal() { document.getElementById('detail-modal').classList.remove('open'); }
-document.getElementById('detail-modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.getElementById('detail-modal').addEventListener('click', function(e) { if (e.target===this) closeModal(); });
 
-function updateStatus(id, status) {
+function modalStatus(id, status) {
   fetch('/api/admin/inquiries/' + id + '?key=' + encodeURIComponent(ADMIN_KEY), {
-    method: 'PATCH', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ status: status })
-  }).then(function(r){ return r.json(); }).then(function(data) {
-    var r = allReservations.find(function(x){ return x.id === id; });
+    method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({status:status})
+  }).then(function(r){return r.json();}).then(function() {
+    var r = allReservations.find(function(x){return x.id===id;});
     if (r) r.status = status;
     closeModal(); loadReservations(); loadStats();
   });
 }
 
-function saveNote(id) {
+function modalSaveNote(id) {
   var note = document.getElementById('modal-note').value;
   fetch('/api/admin/inquiries/' + id + '?key=' + encodeURIComponent(ADMIN_KEY), {
-    method: 'PATCH', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ admin_notes: note })
-  }).then(function(r){ return r.json(); }).then(function() {
-    var r = allReservations.find(function(x){ return x.id === id; });
+    method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({admin_notes:note})
+  }).then(function(r){return r.json();}).then(function() {
+    var r = allReservations.find(function(x){return x.id===id;});
     if (r) r.admin_notes = note;
     closeModal();
   });
 }
 
-function callClient(tel) { window.location.href = 'tel:' + tel; }
-
 // ── CALENDAR ─────────────────────────────────────────────────────────────────
-function buildCalStrip() {
-  var strip = document.getElementById('cal-strip');
-  var days = ['Ned','Pon','Tor','Sri','Cet','Pet','Sob'];
-  var today = new Date();
-  strip.innerHTML = '';
-  for (var i = -3; i <= 10; i++) {
-    var d = new Date(today); d.setDate(today.getDate() + i);
-    var dateStr = d.toISOString().slice(0, 10);
-    var el = document.createElement('div');
-    el.className = 'cal-day' + (i === 0 ? ' active' : '');
-    el.innerHTML = '<div class="day-name">' + days[d.getDay()] + '</div><div class="day-num">' + d.getDate() + '</div><div class="day-dot" style="' + (i === 0 ? '' : 'opacity:0') + '"></div>';
-    el.dataset.date = dateStr;
-    el.addEventListener('click', function(){ selectCalDay(this); });
-    strip.appendChild(el);
-  }
-  selectCalDay(strip.querySelector('.active'));
+var calReservations = [];
+
+function loadCalReservations(cb) {
+  fetch('/api/admin/inquiries?key=' + encodeURIComponent(ADMIN_KEY))
+    .then(function(r){return r.json();})
+    .then(function(data) {
+      calReservations = data.inquiries || [];
+      allReservations = calReservations;
+      buildCalGrid();
+      if (cb) cb();
+    });
 }
 
-function selectCalDay(el) {
-  document.querySelectorAll('.cal-day').forEach(function(d) { d.classList.remove('active'); });
-  el.classList.add('active');
-  var dateStr = el.dataset.date;
-  document.getElementById('cal-day-title').textContent = 'Rezervacije: ' + dateStr;
-  var url = '/api/admin/inquiries?key=' + encodeURIComponent(ADMIN_KEY);
-  fetch(url).then(function(r){return r.json();}).then(function(data){
-    var dayReservs = (data.inquiries||[]).filter(function(r){
-      return r.created_at && r.created_at.startsWith(dateStr);
-    });
-    allReservations = data.inquiries || [];
-    document.getElementById('cal-reserv-list').innerHTML = dayReservs.length
-      ? dayReservs.map(renderReservCard).join('')
-      : emptyState('Ni rezervacij za ta dan.');
+function calToday() { calYear = new Date().getFullYear(); calMonth = new Date().getMonth(); buildCalGrid(); }
+function calPrevMonth() { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } buildCalGrid(); }
+function calNextMonth() { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } buildCalGrid(); }
+
+function buildCalGrid() {
+  var MONTHS = ['Januar','Februar','Marec','April','Maj','Junij','Julij','Avgust','September','Oktober','November','December'];
+  document.getElementById('cal-month-title').textContent = MONTHS[calMonth] + ' ' + calYear;
+
+  var firstDay = new Date(calYear, calMonth, 1).getDay();
+  var daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  var daysInPrev = new Date(calYear, calMonth, 0).getDate();
+  // Mon-first: 0=Sun → 6
+  var startOffset = (firstDay === 0) ? 6 : firstDay - 1;
+
+  var today = new Date();
+  var todayStr = today.getFullYear() + '-' + pad(today.getMonth()+1) + '-' + pad(today.getDate());
+
+  // Group reservations by date
+  var byDate = {};
+  calReservations.forEach(function(r) {
+    var d = (r.created_at||'').substring(0,10);
+    if (!byDate[d]) byDate[d] = [];
+    byDate[d].push(r);
   });
+
+  var cells = '';
+  // prev month fillers
+  for (var i = startOffset - 1; i >= 0; i--) {
+    cells += '<div class="cal-cell other-month"><div class="cal-date">' + (daysInPrev - i) + '</div></div>';
+  }
+  // current month
+  for (var d = 1; d <= daysInMonth; d++) {
+    var dateStr = calYear + '-' + pad(calMonth+1) + '-' + pad(d);
+    var isToday = dateStr === todayStr;
+    var dayReservs = byDate[dateStr] || [];
+    var dots = dayReservs.slice(0,5).map(function(r) {
+      return '<span class="cal-dot cal-dot-' + r.status + '"></span>';
+    }).join('');
+    var count = dayReservs.length > 0 ? '<span class="cal-count">' + dayReservs.length + '</span>' : '';
+    cells += '<div class="cal-cell' + (isToday?' today':'') + '" onclick="calSelectDay(\'' + dateStr + '\')">' +
+      '<div class="cal-date">' + d + '</div>' +
+      (dots ? '<div class="cal-dots">' + dots + '</div>' : '') +
+      count +
+      '</div>';
+  }
+  // next month fillers
+  var totalCells = startOffset + daysInMonth;
+  var remainder = totalCells % 7;
+  if (remainder > 0) {
+    var fillCount = 7 - remainder;
+    for (var n = 1; n <= fillCount; n++) {
+      cells += '<div class="cal-cell other-month"><div class="cal-date">' + n + '</div></div>';
+    }
+  }
+
+  document.getElementById('cal-grid').innerHTML = cells;
 }
+
+function calSelectDay(dateStr) {
+  // highlight selected
+  document.querySelectorAll('.cal-cell').forEach(function(c) { c.classList.remove('selected'); });
+  event.currentTarget.classList.add('selected');
+
+  var dayReservs = calReservations.filter(function(r){ return (r.created_at||'').startsWith(dateStr); });
+  var section = document.getElementById('cal-day-section');
+  var title = document.getElementById('cal-day-title');
+  var list = document.getElementById('cal-reserv-list');
+  section.style.display = 'block';
+  title.textContent = 'Rezervacije: ' + dateStr + ' (' + dayReservs.length + ')';
+  list.innerHTML = dayReservs.length ? dayReservs.map(function(r){return renderCard(r,true);}).join('') : emptyState('Ni rezervacij ta dan.');
+  section.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
 // ── CONVERSATIONS ─────────────────────────────────────────────────────────────
 function loadConversations() {
@@ -653,12 +815,24 @@ function loadConversations() {
   fetch('/api/admin/conversations?key=' + encodeURIComponent(ADMIN_KEY) + '&hours=' + hours)
     .then(function(r){return r.json();})
     .then(function(data) {
-      var convs = data.conversations || [];
-      if (!convs.length) { document.getElementById('conv-list').innerHTML = emptyState('Ni pogovorov.'); return; }
-      document.getElementById('conv-list').innerHTML = convs.map(function(c) {
-        return '<div class="conv-item"><div class="conv-q">Obiskovalec: ' + escHtml(c.user_message) + '</div><div class="conv-a">Bot: ' + escHtml(c.bot_response.substring(0, 200)) + (c.bot_response.length > 200 ? '...' : '') + '</div><div class="conv-ts">' + escHtml(c.created_at) + '</div></div>';
-      }).join('');
+      allConversations = data.conversations || [];
+      filterConversations();
     });
+}
+
+function filterConversations() {
+  var q = (document.getElementById('conv-search').value||'').toLowerCase();
+  var filtered = q ? allConversations.filter(function(c){
+    return (c.user_message||'').toLowerCase().includes(q) || (c.bot_response||'').toLowerCase().includes(q);
+  }) : allConversations;
+  if (!filtered.length) { document.getElementById('conv-list').innerHTML = emptyState('Ni pogovorov.'); return; }
+  document.getElementById('conv-list').innerHTML = filtered.map(function(c) {
+    return '<div class="conv-item">' +
+      '<div class="conv-session">Seja: ' + escHtml((c.session_id||'').substring(0,16)) + '...</div>' +
+      '<div class="conv-q">' + escHtml(c.user_message) + '</div>' +
+      '<div class="conv-a">' + escHtml((c.bot_response||'').substring(0,200)) + (c.bot_response&&c.bot_response.length>200?'...':'') + '</div>' +
+      '<div class="conv-ts">' + escHtml(c.created_at||'') + '</div></div>';
+  }).join('');
 }
 
 // ── ANALYTICS ─────────────────────────────────────────────────────────────────
@@ -667,30 +841,31 @@ function loadAnalytics() {
     .then(function(r){return r.json();})
     .then(function(data) {
       document.getElementById('analytics-kpi').innerHTML =
-        kpiCard('Danes', data.danes, '#f3eaf4') +
-        kpiCard('Ta teden', data.teden, '#e8f5e9') +
-        kpiCard('Ta mesec', data.mesec, '#fff8e1') +
-        kpiCard('Skupaj', data.skupaj, '#f3eaf4');
+        aKpi('Danes',data.danes,'#f3eaf4','#824D88') +
+        aKpi('Ta teden',data.teden,'#e8f5e9','#2e7d32') +
+        aKpi('Ta mesec',data.mesec,'#fff8e1','#f57f17') +
+        aKpi('Skupaj',data.skupaj,'#f3eaf4','#824D88');
 
       var total = data.skupaj || 1;
       var statuses = [
-        { key: 'caka', label: 'Caka', count: data.statusi.caka || 0 },
-        { key: 'potrjeno', label: 'Potrjeno', count: data.statusi.potrjeno || 0 },
-        { key: 'zavrnjeno', label: 'Zavrnjeno', count: data.statusi.zavrnjeno || 0 }
+        {label:'Čaka',count:data.statusi.caka||0},
+        {label:'Potrjeno',count:data.statusi.potrjeno||0},
+        {label:'Zavrnjeno',count:data.statusi.zavrnjeno||0}
       ];
       document.getElementById('analytics-statuses').innerHTML = renderBars(statuses, total);
-
-      var services = Object.entries(data.storitve || {}).sort(function(a,b){return b[1]-a[1];}).map(function(e){ return {label:e[0],count:e[1]}; });
-      var maxSvc = services.length ? Math.max.apply(null, services.map(function(s){return s.count;})) : 1;
+      var services = Object.entries(data.storitve||{}).sort(function(a,b){return b[1]-a[1];}).map(function(e){return{label:e[0],count:e[1]};});
+      var maxSvc = services.length ? Math.max.apply(null,services.map(function(s){return s.count;})) : 1;
       document.getElementById('analytics-services').innerHTML = renderBars(services, maxSvc);
     });
 }
 
-function kpiCard(label, val, bg) {
-  return '<div class="kpi-card" style="background:' + bg + ';"><div class="kpi-value">' + val + '</div><div class="kpi-label">' + label + '</div></div>';
+function aKpi(label, val, bg, color) {
+  return '<div class="kpi-card" style="background:' + bg + ';--brand:' + color + ';">' +
+    '<div class="kpi-value" style="color:' + color + ';">' + val + '</div>' +
+    '<div class="kpi-label">' + label + '</div></div>';
 }
 
-// ── UTILS ──────────────────────────────────────────────────────────────────
+// ── UTILS ─────────────────────────────────────────────────────────────────────
 function escHtml(str) {
   if (!str) return '';
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
