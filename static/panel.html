@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ornament Spa — Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--zlata:#D7AD55;--zlata-s:#E8CE96;--zlata-t:#C99C3E;--sliva:#814C87;--sliva-t:#6E3F74;
+      --bez:#D0C8BB;--temna:#2C2A27;--siva:#6E6A64;--krem:#FAF8F5;--rob:#EFEAE1}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Montserrat,sans-serif;font-size:14px;line-height:1.6;color:var(--temna);background:var(--krem);display:flex;min-height:100vh}
+aside{width:238px;flex:none;background:#fff;border-right:1px solid var(--rob);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.znamka{padding:24px 22px 20px;border-bottom:1px solid var(--rob);display:flex;align-items:center;gap:11px}
+.znamka svg{width:34px;height:34px;flex:none}
+.ime{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--sliva);line-height:1}
+.ime small{display:block;font-family:Montserrat,sans-serif;font-size:7.5px;letter-spacing:2.8px;color:var(--zlata);text-transform:uppercase;margin-top:3px}
+nav{padding:14px 12px;flex:1;overflow-y:auto}
+.skupina{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#B3ADA3;padding:14px 14px 6px}
+nav a{display:flex;align-items:center;gap:11px;padding:10px 13px;border-radius:10px;color:#4A4742;text-decoration:none;font-size:13.5px;cursor:pointer;margin-bottom:2px;transition:.15s;font-weight:500}
+nav a:hover{background:#FAF7F1}
+nav a.on{background:linear-gradient(100deg,#FDF7EA,#F7EDD6);color:#8A6D2C}
+nav a svg{width:17px;height:17px;flex:none;stroke:#8C877F;fill:none;stroke-width:1.7}
+nav a.on svg{stroke:#8A6D2C}
+nav a .bal{margin-left:auto;background:#F3EDE1;color:#8A7442;font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px}
+.nogaS{padding:15px 20px;border-top:1px solid var(--rob);font-size:10.5px;color:var(--siva);line-height:1.7}
+main{flex:1;min-width:0}
+.vrh{background:#fff;border-bottom:1px solid var(--rob);padding:15px 30px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.vrh h1{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:25px}
+.vrh .pod{font-size:11.5px;color:var(--siva)}
+.izbira{display:flex;gap:6px;background:#F6F2EA;padding:4px;border-radius:11px}
+.izbira button{border:0;background:transparent;padding:8px 15px;border-radius:8px;font-family:Montserrat,sans-serif;font-size:12.5px;color:var(--siva);cursor:pointer;transition:.15s}
+.izbira button.on{background:#fff;color:var(--temna);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.vsebina{padding:26px 30px 70px;max-width:1240px}
+section{display:none}section.on{display:block}
+.kartice{display:grid;grid-template-columns:repeat(auto-fit,minmax(186px,1fr));gap:15px;margin-bottom:24px}
+.k{background:#fff;border:1px solid var(--rob);border-radius:15px;padding:19px}
+.k.p{background:linear-gradient(150deg,#FDF7EA,#F7EDD6);border-color:#EBD9AE}
+.k .lbl{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--siva)}
+.k .num{font-family:'Cormorant Garamond',serif;font-size:37px;line-height:1.15;margin:5px 0 1px}
+.k .spr{font-size:12px;font-weight:500}
+.gor{color:#5F8D4E}.dol{color:#C0605A}
+.plosca{background:#fff;border:1px solid var(--rob);border-radius:15px;padding:23px;margin-bottom:20px}
+.plosca h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:20px;margin-bottom:3px}
+.plosca .pod{font-size:12px;color:var(--siva);margin-bottom:15px}
+.dve{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.dve2{display:grid;grid-template-columns:1.35fr 1fr;gap:20px}
+@media(max-width:1000px){.dve,.dve2{grid-template-columns:1fr}aside{display:none}}
+.vr{display:flex;align-items:center;gap:13px;margin-bottom:10px;cursor:pointer;border-radius:9px;padding:4px;transition:.15s}
+.vr:hover{background:#FBF8F2}
+.vr .n{width:164px;flex:none;font-size:13px}
+.vr .c{flex:1;background:#F1EDE6;border-radius:20px;height:20px;overflow:hidden}
+.vr .c i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--zlata),var(--zlata-s))}
+.vr.s .c i{background:linear-gradient(90deg,#9A66A0,#C39BC8)}
+.vr .d{width:92px;text-align:right;font-weight:600;font-size:13px}
+.det{display:none;background:#FBF8F2;border-left:3px solid var(--zlata);border-radius:0 10px 10px 0;padding:11px 16px;margin:-3px 0 11px 174px;font-size:12.5px;color:var(--siva)}
+.det.on{display:block}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--siva);font-weight:500;padding:0 10px 10px;border-bottom:1px solid var(--rob)}
+td{padding:11px 10px;border-bottom:1px solid #F5F1EA}
+tr:last-child td{border-bottom:0}
+td.d{text-align:right;font-weight:600;white-space:nowrap}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:#FBF8F2}
+.zn{display:inline-block;font-size:10px;letter-spacing:.7px;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:#F3EDE1;color:#8A7442;white-space:nowrap}
+.zn.v{background:#EEE4F0;color:var(--sliva)}
+.zn.t{background:#E4EFE6;color:#4A7A52}
+.zn.caka{background:#FBF0DC;color:#9A7627}
+.zn.potrjeno{background:#EEE4F0;color:var(--sliva)}
+.zn.koncano{background:#E7EFE8;color:#4A7A52}
+.filtri{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.filtri button{border:1px solid var(--rob);background:#fff;padding:6px 13px;border-radius:20px;font-family:Montserrat,sans-serif;font-size:11.5px;color:var(--siva);cursor:pointer}
+.filtri button.on{background:var(--sliva);border-color:var(--sliva);color:#fff}
+.filtri input{border:1px solid var(--rob);border-radius:20px;padding:7px 14px;font-family:Montserrat,sans-serif;font-size:12px;min-width:190px;background:#fff}
+.filtri input:focus{outline:none;border-color:var(--zlata);box-shadow:0 0 0 3px rgba(215,173,85,.15)}
+.nasvet{background:#FBF7EF;border-left:3px solid var(--zlata);border-radius:0 11px 11px 0;padding:13px 18px;margin-top:14px;font-size:13px}
+.nasvet b{color:#8A6D2C}
+.ura{display:grid;grid-template-columns:46px repeat(7,1fr);gap:5px;font-size:10.5px}
+.ura .dan{text-align:center;color:var(--siva);letter-spacing:.5px;padding-bottom:7px}
+.ura .cas{color:var(--siva);text-align:right;padding-right:8px;line-height:28px}
+.ura i{display:block;height:28px;border-radius:6px;cursor:pointer}
+.ura i:hover{outline:2px solid var(--zlata)}
+/* koledar */
+.kol{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.kol .gl{text-align:center;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;color:var(--siva);padding-bottom:4px}
+.dan{min-height:86px;border:1px solid var(--rob);border-radius:11px;padding:8px;background:#fff;cursor:pointer;transition:.15s;display:flex;flex-direction:column;gap:3px}
+.dan:hover{border-color:var(--zlata);transform:translateY(-1px)}
+.dan.prazen{background:#FBF9F6;border-style:dashed;cursor:default}
+.dan.prazen:hover{transform:none;border-color:var(--rob)}
+.dan.izbran{background:linear-gradient(150deg,#FDF7EA,#F7EDD6);border-color:#E0C68A}
+.dan .st{font-family:'Cormorant Garamond',serif;font-size:19px;line-height:1}
+.dan.vikend .st{color:var(--sliva)}
+.dan .pika{display:flex;gap:3px;flex-wrap:wrap;margin-top:auto}
+.dan .pika span{width:6px;height:6px;border-radius:50%;background:var(--zlata)}
+.dan .kolicina{font-size:10.5px;color:var(--siva)}
+.termin{display:flex;gap:11px;align-items:center;padding:10px 0;border-bottom:1px solid #F5F1EA;font-size:13px}
+.termin:last-child{border-bottom:0}
+.termin .cas2{font-family:'Cormorant Garamond',serif;font-size:19px;width:56px;flex:none;color:var(--zlata-t)}
+.termin .kdo{flex:1}
+.termin .kdo b{display:block;font-weight:600}
+.termin .kdo span{font-size:12px;color:var(--siva)}
+/* pogovori */
+.pog{border:1px solid var(--rob);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:.15s;background:#fff}
+.pog:hover{border-color:var(--zlata);background:#FDFBF7}
+.pog .gl2{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:4px}
+.pog .gl2 b{font-size:13px}
+.pog .gl2 span{font-size:11px;color:var(--siva);white-space:nowrap}
+.pog p{font-size:12.5px;color:var(--siva)}
+.pog .telo{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #F5F1EA}
+.pog.on .telo{display:block}
+.msg{margin-bottom:9px;font-size:12.5px;line-height:1.55}
+.msg.g{color:var(--temna)}
+.msg.b{color:var(--sliva)}
+.msg b{display:block;font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:#B3ADA3;margin-bottom:2px}
+.opr{display:flex;align-items:flex-start;gap:13px;padding:13px 0;border-bottom:1px solid #F5F1EA;cursor:pointer}
+.opr:last-child{border-bottom:0}
+.opr input{margin-top:4px;accent-color:var(--zlata);width:16px;height:16px;cursor:pointer}
+.opr .t{flex:1}
+.opr .t b{display:block;font-weight:600;margin-bottom:2px}
+.opr .t span{font-size:12.5px;color:var(--siva)}
+.opr.dn .t b{text-decoration:line-through;color:var(--siva)}
+.stev{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--zlata);width:26px;text-align:center;flex:none}
+.vpr{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #F5F1EA;font-size:13px}
+.vpr:last-child{border-bottom:0}
+.vpr b{color:var(--siva);white-space:nowrap}
+/* modal */
+.zaslon{display:none;position:fixed;inset:0;background:rgba(44,42,39,.42);z-index:20;align-items:center;justify-content:center;padding:20px}
+.zaslon.on{display:flex}
+.okno{background:#fff;border-radius:18px;max-width:440px;width:100%;overflow:hidden;box-shadow:0 24px 60px rgba(110,63,116,.2)}
+.okno .g3{padding:20px 24px;border-bottom:1px solid var(--rob);display:flex;justify-content:space-between;align-items:center}
+.okno .g3 h4{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:21px}
+.okno .g3 button{border:0;background:transparent;font-size:20px;color:var(--siva);cursor:pointer;line-height:1}
+.okno .b3{padding:22px 24px}
+.okno .b3 div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F7F3EC;font-size:13px}
+.okno .b3 div:last-child{border-bottom:0}
+.okno .b3 span:first-child{color:var(--siva)}
+.okno .b3 span:last-child{font-weight:600}
+.okno .n3{padding:16px 24px;background:#FDFCFA;border-top:1px solid var(--rob);display:flex;gap:8px;justify-content:flex-end}
+.okno .n3 button{border:1px solid var(--rob);background:#fff;padding:8px 15px;border-radius:9px;font-family:Montserrat,sans-serif;font-size:12.5px;cursor:pointer;color:var(--siva)}
+.okno .n3 button.pr{background:linear-gradient(100deg,var(--sliva),var(--sliva-t));border:0;color:#fff}
+/* login */
+#loginZaslon{position:fixed;inset:0;background:rgba(44,42,39,.6);z-index:50;display:flex;align-items:center;justify-content:center}
+#loginOkno{background:#fff;border-radius:18px;padding:36px;max-width:340px;width:100%;box-shadow:0 24px 60px rgba(110,63,116,.25);text-align:center}
+#loginOkno h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:26px;color:var(--sliva);margin-bottom:6px}
+#loginOkno p{font-size:12.5px;color:var(--siva);margin-bottom:22px}
+#loginGeslo{width:100%;border:1px solid var(--rob);border-radius:10px;padding:11px 16px;font-family:Montserrat,sans-serif;font-size:14px;margin-bottom:12px;text-align:center}
+#loginGeslo:focus{outline:none;border-color:var(--zlata);box-shadow:0 0 0 3px rgba(215,173,85,.15)}
+#loginBtn{width:100%;background:linear-gradient(100deg,var(--sliva),var(--sliva-t));color:#fff;border:0;border-radius:10px;padding:12px;font-family:Montserrat,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;letter-spacing:.5px}
+#loginNapaka{color:#C0605A;font-size:12px;margin-top:8px;display:none}
+</style>
+</head>
+<body>
+
+<aside>
+  <div class="znamka">
+    <svg viewBox="0 0 40 40"><g fill="none" stroke="#814C87" stroke-width="1.6">
+      <circle cx="20" cy="20" r="4.4"/>
+      <g stroke="#D7AD55"><ellipse cx="20" cy="10" rx="3.6" ry="6.4"/><ellipse cx="20" cy="30" rx="3.6" ry="6.4"/>
+      <ellipse cx="10" cy="20" rx="6.4" ry="3.6"/><ellipse cx="30" cy="20" rx="6.4" ry="3.6"/></g>
+      <g opacity=".55"><ellipse cx="13" cy="13" rx="5.4" ry="3" transform="rotate(-45 13 13)"/>
+      <ellipse cx="27" cy="13" rx="5.4" ry="3" transform="rotate(45 27 13)"/>
+      <ellipse cx="13" cy="27" rx="5.4" ry="3" transform="rotate(45 13 27)"/>
+      <ellipse cx="27" cy="27" rx="5.4" ry="3" transform="rotate(-45 27 27)"/></g></g></svg>
+    <div class="ime">ornament<small>panel</small></div>
+  </div>
+  <nav id="nav"></nav>
+  <div class="nogaS" id="nogaS">Nalagam podatke...</div>
+</aside>
+
+<main>
+  <div class="vrh">
+    <div><h1 id="naslov">Pregled</h1><div class="pod" id="obdobjeTxt"></div></div>
+    <div class="izbira" id="izbira"></div>
+  </div>
+  <div class="vsebina">
+    <section id="s-pregled" class="on"></section>
+    <section id="s-koledar"></section>
+    <section id="s-rezervacije"></section>
+    <section id="s-gostje"></section>
+    <section id="s-objave"></section>
+    <section id="s-oglasi"></section>
+    <section id="s-pogovori"></section>
+    <section id="s-predlogi"></section>
+  </div>
+</main>
+
+<div class="zaslon" id="zaslon" onclick="if(event.target===this)zapri()"><div class="okno" id="okno"></div></div>
+
+<div id="loginZaslon">
+  <div id="loginOkno">
+    <h2>Ornament Panel</h2>
+    <p>Vpišite geslo za dostop do panela</p>
+    <input id="loginGeslo" type="password" placeholder="geslo" autocomplete="current-password">
+    <button id="loginBtn" onclick="doLogin()">Vstopi</button>
+    <div id="loginNapaka">Napačno geslo. Poskusite znova.</div>
+  </div>
+</div>
+
+<script>
+const IK={
+ pregled:'<path d="M3 3h7v7H3zM14 3h7v4h-7zM14 10h7v11h-7zM3 14h7v7H3z"/>',
+ koledar:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+ rezervacije:'<path d="M4 5h16v15H4z"/><path d="M8 10h8M8 14h5"/>',
+ gostje:'<circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-5.6 6.5-5.6s6.5 2 6.5 5.6"/><path d="M17 11.5a3 3 0 100-6M18 20c0-2.2-.8-3.9-2-5"/>',
+ objave:'<rect x="3" y="4" width="18" height="15" rx="2"/><path d="M3 9h18M7 13h7"/>',
+ oglasi:'<path d="M3 11l16-6v14L3 13z"/><path d="M7 12.5V19"/>',
+ pogovori:'<path d="M21 12a8.5 8.5 0 01-9.5 8.4L7 22l1.2-3.6A8.5 8.5 0 1121 12z"/><circle cx="8.5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="15.5" cy="12" r="1"/>',
+ predlogi:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 00-3.5 10.9c.4.3.5.7.5 1.1h6c0-.4.1-.8.5-1.1A6 6 0 0012 3z"/>'};
+
+const RAZ=[['pregled','Pregled',''],['koledar','Koledar',''],['rezervacije','Rezervacije',''],
+           ['gostje','Gostje',''],['objave','Objave',''],['oglasi','Oglaševanje',''],
+           ['pogovori','Pogovori',''],['predlogi','Predlogi','']];
+const SKUPINE={pregled:'Pregled',koledar:'Delo',objave:'Trženje',pogovori:'Pomočnik'};
+
+const NOW = new Date();
+const MESI = ['januar','februar','marec','april','maj','junij','julij','avgust','september','oktober','november','december'];
+const MESI_K = ['jan','feb','mar','apr','maj','jun','jul','avg','sep','okt','nov','dec'];
+const DNEVI = ['NED','PON','TOR','SRE','ČET','PET','SOB'];
+const DNEVI_P = ['Nedelja','Ponedeljek','Torek','Sreda','Četrtek','Petek','Sobota'];
+
+function weekRange(weeksAgo) {
+  const d = new Date(NOW);
+  const day = d.getDay() || 7;
+  d.setDate(d.getDate() - day + 1 - 7 * weeksAgo);
+  const end = new Date(d); end.setDate(d.getDate() + 6);
+  const f = x => x.getDate() + '. ' + MESI_K[x.getMonth()];
+  return f(d) + ' – ' + f(end) + '. ' + end.getFullYear();
+}
+const mesecLabel = MESI[NOW.getMonth()] + ' ' + NOW.getFullYear();
+const daysThisMo = new Date(NOW.getFullYear(), NOW.getMonth() + 1, 0).getDate();
+const mesecRange = '1. – ' + daysThisMo + '. ' + MESI[NOW.getMonth()] + ' ' + NOW.getFullYear();
+
+const OBD = [
+  ['teden', 'Ta teden', weekRange(0)],
+  ['prej', 'Prejšnji teden', weekRange(1)],
+  ['mesec', MESI[NOW.getMonth()].charAt(0).toUpperCase() + MESI[NOW.getMonth()].slice(1), mesecRange]
+];
+
+let kalYear = NOW.getFullYear(), kalMonth = NOW.getMonth();
+
+/* --- data vars --- */
+let P = {
+  teden: {kpi:[['Rezervacije',null,'','','',1],['Obiski strani','-','','',''],['Novi gostje',0,'','',''],['Prihodek',null,'','','']],viri:[],gostje:{novi:0,vrnjeni:0,pogostost:'-',zadrzanje:'-'},objave:[],oglasi:[]},
+  prej:  {kpi:[['Rezervacije',null,'','','',1],['Obiski strani','-','','',''],['Novi gostje',0,'','',''],['Prihodek',null,'','','']],viri:[],gostje:{novi:0,vrnjeni:0,pogostost:'-',zadrzanje:'-'},objave:[],oglasi:[]},
+  mesec: {kpi:[['Rezervacije',null,'','','',1],['Obiski strani','-','','',''],['Novi gostje',0,'','',''],['Prihodek',null,'','','']],viri:[],gostje:{novi:0,vrnjeni:0,pogostost:'-',zadrzanje:'-'},objave:[],oglasi:[]}
+};
+let REZ = [], TREND = [], STALNI = [], SEGMENTI = [], VIRI_ZVESTOBA = [], POGOVORI = [], VPRASANJA = [];
+
+function todayISO() { return NOW.toISOString().slice(0,10); }
+const vObd = o => {
+  if(o === 'mesec') {
+    const pref = kalYear + '-' + String(kalMonth+1).padStart(2,'0');
+    return REZ.filter(r => (r.datum || '').startsWith(pref));
+  }
+  const today = todayISO();
+  const ago7  = new Date(+NOW - 7*86400000).toISOString().slice(0,10);
+  const ago14 = new Date(+NOW - 14*86400000).toISOString().slice(0,10);
+  if(o === 'teden') return REZ.filter(r => r.datum >= ago7 && r.datum <= today);
+  if(o === 'prej')  return REZ.filter(r => r.datum >= ago14 && r.datum < ago7);
+  return REZ;
+};
+
+let obd='teden', razd='pregled', fKanal='vsi', fStatus='vsi', izbranDan=null, iskanje='';
+const $=s=>document.querySelector(s);
+const stev=n=>typeof n==='number'?n.toLocaleString('sl-SI'):n;
+
+/* --- auth --- */
+let panelKey = sessionStorage.getItem('pkey') || '';
+
+async function apiGet(url) {
+  const sep = url.includes('?') ? '&' : '?';
+  const r = await fetch(url + sep + 'key=' + encodeURIComponent(panelKey));
+  if (r.status === 401) {
+    panelKey = ''; sessionStorage.removeItem('pkey');
+    document.getElementById('loginNapaka').style.display = 'block';
+    document.getElementById('loginGeslo').value = '';
+    document.getElementById('loginZaslon').style.display = 'flex';
+    throw new Error('Unauthorized');
+  }
+  if (!r.ok) throw new Error(r.status);
+  sessionStorage.setItem('pkey', panelKey);
+  return r.json();
+}
+
+function doLogin() {
+  const inp = document.getElementById('loginGeslo');
+  panelKey = inp.value.trim();
+  if (!panelKey) return;
+  document.getElementById('loginZaslon').style.display = 'none';
+  document.getElementById('loginNapaka').style.display = 'none';
+  fetchAll();
+}
+
+document.getElementById('loginGeslo').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+async function fetchAll() {
+  try {
+    const [rezD, trendD, gostjeD, pogD, vprD, predD] = await Promise.all([
+      apiGet('/api/panel/rezervacije'),
+      apiGet('/api/panel/trend'),
+      apiGet('/api/panel/gostje'),
+      apiGet('/api/panel/pogovori?limit=20'),
+      apiGet('/api/panel/vprasanja'),
+      apiGet('/api/panel/predlogi'),
+    ]);
+
+    REZ = (rezD.rezervacije || []).map(inq => {
+      const dt = (inq.created_at || '').slice(0, 10);
+      const d = parseInt((inq.created_at || '').slice(8, 10)) || 1;
+      return {
+        d, datum: dt,
+        ura: (inq.created_at || '').slice(11, 16) || '09:00',
+        ime: inq.ime || '?',
+        stor: inq.tip || '-',
+        cena: 0, traj: 0, vir: 'Telefon',
+        status: inq.status || 'caka'
+      };
+    });
+
+    TREND = trendD.trend || [];
+    STALNI = gostjeD.stalni || [];
+    SEGMENTI = gostjeD.segmenti || [];
+    VIRI_ZVESTOBA = gostjeD.viri_zvestoba || [];
+    POGOVORI = pogD.pogovori || [];
+    VPRASANJA = vprD.vprasanja || [];
+    window._predlogi = predD.predlogi || [];
+
+    const today = todayISO();
+    const ago7  = new Date(+NOW - 7*86400000).toISOString().slice(0,10);
+    const ago14 = new Date(+NOW - 14*86400000).toISOString().slice(0,10);
+    const ago21 = new Date(+NOW - 21*86400000).toISOString().slice(0,10);
+    const ago30 = new Date(+NOW - 30*86400000).toISOString().slice(0,10);
+    const ago60 = new Date(+NOW - 60*86400000).toISOString().slice(0,10);
+
+    const tRez  = REZ.filter(r => r.datum >= ago7  && r.datum <= today);
+    const pRez  = REZ.filter(r => r.datum >= ago14 && r.datum < ago7);
+    const ppRez = REZ.filter(r => r.datum >= ago21 && r.datum < ago14);
+    const mRez  = REZ.filter(r => r.datum >= ago30 && r.datum <= today);
+    const pmRez = REZ.filter(r => r.datum >= ago60 && r.datum < ago30);
+
+    function buildObd(rez, prevRez) {
+      const curr = rez.length, prev = prevRez.length, diff = curr - prev;
+      const spr = diff > 0 ? '▲ ' + diff : diff < 0 ? '▼ ' + Math.abs(diff) : '▬ 0';
+      const dir = diff > 0 ? 'gor' : diff < 0 ? 'dol' : '';
+      return {
+        kpi: [
+          ['Rezervacije', null, spr, 'prej ' + prev, dir, 1],
+          ['Obiski strani', '-', '', '', ''],
+          ['Novi gostje', 0, '', '', ''],
+          ['Prihodek', null, '', '', ''],
+        ],
+        viri: [], gostje: gostjeD.gostje || {novi:0,vrnjeni:0,pogostost:'-',zadrzanje:'-'},
+        objave: [], oglasi: []
+      };
+    }
+
+    P = { teden: buildObd(tRez, pRez), prej: buildObd(pRez, ppRez), mesec: buildObd(mRez, pmRez) };
+
+    const ts = new Date().toLocaleTimeString('sl-SI', {hour:'2-digit',minute:'2-digit'});
+    document.getElementById('nogaS').innerHTML = 'Osveženo ob ' + ts + '<br><b style="color:#8A6D2C">Ornament Panel · v živo</b>';
+
+    risi();
+  } catch(e) {
+    if(e.message !== 'Unauthorized') console.error('Panel fetch:', e);
+  }
+}
+
+/* --- nav setup --- */
+let navHtml='';
+RAZ.forEach(([k,i,b])=>{
+  if(SKUPINE[k])navHtml+='<div class="skupina">'+SKUPINE[k]+'</div>';
+  navHtml+='<a data-r="'+k+'" class="'+(k===razd?'on':'')+'"><svg viewBox="0 0 24 24">'+IK[k]+'</svg>'+i+
+    (b?'<span class="bal">'+b+'</span>':'')+'</a>';});
+$('#nav').innerHTML=navHtml;
+$('#nav').onclick=function(e){const a=e.target.closest('a');if(!a)return;
+  razd=a.dataset.r;
+  document.querySelectorAll('#nav a').forEach(x=>x.classList.toggle('on',x===a));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id==='s-'+razd));
+  $('#naslov').textContent=RAZ.find(r=>r[0]===razd)[1];
+  window.scrollTo({top:0,behavior:'smooth'});};
+
+$('#izbira').innerHTML=OBD.map(([k,i])=>'<button data-o="'+k+'" class="'+(k===obd?'on':'')+'">'+i+'</button>').join('');
+$('#izbira').onclick=function(e){const b=e.target.closest('button');if(!b)return;
+  obd=b.dataset.o;
+  document.querySelectorAll('#izbira button').forEach(x=>x.classList.toggle('on',x===b));
+  $('#obdobjeTxt').textContent=OBD.find(o=>o[0]===obd)[2];risi();};
+$('#obdobjeTxt').textContent=OBD[0][2];
+
+/* --- rendering functions --- */
+function kartice(d,rez){
+  const prihodek=rez.reduce((s,r)=>s+(r.cena||0),0);
+  if(!d.kpi||!d.kpi.length) return '';
+  return '<div class="kartice">'+d.kpi.map(k=>{
+    let v=k[1]; if(k[0]==='Rezervacije')v=rez.length; if(k[0]==='Prihodek')v=(prihodek?stev(prihodek)+' €':'-');
+    return '<div class="k '+(k[5]?'p':'')+'"><div class="lbl">'+k[0]+'</div><div class="num">'+stev(v)+'</div>'+
+    '<div class="spr '+(k[4]||'')+'">'+k[2]+' <span style="color:var(--siva);font-weight:400">'+k[3]+'</span></div></div>';
+  }).join('')+'</div>';}
+
+function poStoritvah(rez){
+  const m={};rez.forEach(r=>m[r.stor]=(m[r.stor]||0)+1);
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]);}
+
+function palice(vrs,slog,opisi){
+  if(!vrs||!vrs.length) return '<div style="color:var(--siva);font-size:13px;padding:8px 0">Ni podatkov.</div>';
+  const max=Math.max.apply(null,vrs.map(v=>v[1]));
+  return vrs.map(v=>{const o=opisi?opisi[v[0]]:null;
+    return '<div class="vr '+(slog||'')+'" onclick="odpri(this)"><div class="n">'+v[0]+'</div>'+
+    '<div class="c"><i style="width:'+Math.max(4,v[1]/max*100)+'%"></i></div>'+
+    '<div class="d">'+stev(v[1])+'</div></div>'+(o?'<div class="det">'+o+'</div>':'');}).join('');}
+function odpri(el){const d=el.nextElementSibling;if(d&&d.classList.contains('det'))d.classList.toggle('on');}
+
+function toplota(rez){
+  const m=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
+  rez.forEach(r=>{
+    const h=+(r.ura||'09').slice(0,2);
+    const dan=(new Date(r.datum).getDay()+6)%7;
+    const i=h<12?0:h<16?1:h<20?2:3; if(dan>=0&&dan<7)m[i][dan]++;});
+  const max=Math.max(1,...m.flat());
+  const b=['#F3EFE8','#F0E9DC','#EFE6D4','#EADFC4','#E5D6B4','#DCC694','#D7AD55','#C99C3E'];
+  const ure=['8–12','12–16','16–20','20–23'];
+  let h='<div class="ura"><div></div>'+['PON','TOR','SRE','ČET','PET','SOB','NED'].map(d=>'<div class="dan">'+d+'</div>').join('');
+  m.forEach((vr,i)=>{h+='<div class="cas">'+ure[i]+'</div>'+
+    vr.map(n=>'<i style="background:'+b[Math.round(n/max*7)]+'" title="'+n+' rezervacij"></i>').join('');});
+  return h+'</div>';}
+
+function svgTrend(){
+  if(!TREND||!TREND.length) return '<div style="color:var(--siva);padding:24px 0;text-align:center">Ni podatkov za trend. Trend bo viden po enem mesecu.</div>';
+  const W=640,H=210,L=42,R=14,T=16,B=30;
+  const max=Math.max(...TREND.map(t=>t[1]),1)*1.12;
+  const x=i=>L+i*((W-L-R)/(Math.max(TREND.length-1,1)));
+  const y=v=>H-B-(v/max)*(H-T-B);
+  const crta=(idx,barva,deb)=>TREND.map((t,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(t[idx]).toFixed(1)).join(' ');
+  const ploskev='M'+x(0)+' '+y(TREND[0][1])+TREND.map((t,i)=>i?' L'+x(i).toFixed(1)+' '+y(t[1]).toFixed(1):'').join('')+
+    ' L'+x(TREND.length-1)+' '+(H-B)+' L'+x(0)+' '+(H-B)+' Z';
+  let mreza='';
+  for(let i=0;i<=3;i++){const v=max/3*i;
+    mreza+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#F1EDE6"/>'+
+           '<text x="'+(L-8)+'" y="'+(y(v)+4)+'" text-anchor="end" font-size="10" fill="#9C968C">'+Math.round(v)+'</text>';}
+  return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto">'+
+    '<defs><linearGradient id="gz" x1="0" y1="0" x2="0" y2="1">'+
+    '<stop offset="0%" stop-color="#D7AD55" stop-opacity=".28"/><stop offset="100%" stop-color="#D7AD55" stop-opacity="0"/>'+
+    '</linearGradient></defs>'+mreza+
+    '<path d="'+ploskev+'" fill="url(#gz)"/>'+
+    '<path d="'+crta(1)+'" fill="none" stroke="#D7AD55" stroke-width="2.4" stroke-linejoin="round"/>'+
+    '<path d="'+crta(3)+'" fill="none" stroke="#814C87" stroke-width="1.8" stroke-dasharray="4 3"/>'+
+    '<path d="'+crta(2)+'" fill="none" stroke="#B08BB5" stroke-width="1.8"/>'+
+    TREND.map((t,i)=>'<circle cx="'+x(i)+'" cy="'+y(t[1])+'" r="3.6" fill="#fff" stroke="#D7AD55" stroke-width="2"><title>'+
+      t[0]+': '+t[1]+' rezervacij</title></circle>').join('')+
+    TREND.map((t,i)=>'<text x="'+x(i)+'" y="'+(H-10)+'" text-anchor="middle" font-size="10.5" fill="#6E6A64">'+t[0]+'</text>').join('')+
+    '</svg>'+
+    '<div style="display:flex;gap:18px;font-size:11.5px;color:var(--siva);margin-top:6px;flex-wrap:wrap">'+
+    '<span><b style="color:#D7AD55">━</b> vse rezervacije</span>'+
+    '<span><b style="color:#814C87">╌</b> vrnjeni gostje</span>'+
+    '<span><b style="color:#B08BB5">━</b> novi gostje</span></div>';}
+
+function koledar(){
+  const daysInMonth = new Date(kalYear, kalMonth+1, 0).getDate();
+  const prvi=(new Date(kalYear,kalMonth,1).getDay()+6)%7;
+  let h='<div class="kol">'+['PON','TOR','SRE','ČET','PET','SOB','NED'].map(d=>'<div class="gl">'+d+'</div>').join('');
+  for(let i=0;i<prvi;i++)h+='<div class="dan prazen"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr=kalYear+'-'+String(kalMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const dnevne=REZ.filter(r=>r.datum===dateStr);
+    const vikend=[0,6].includes(new Date(kalYear,kalMonth,d).getDay());
+    h+='<div class="dan'+(vikend?' vikend':'')+(izbranDan===d?' izbran':'')+'" onclick="izberiDan('+d+')">'+
+       '<div class="st">'+d+'</div>'+
+       (dnevne.length?'<div class="kolicina">'+dnevne.length+' enot</div>'+
+         '<div class="pika">'+dnevne.slice(0,6).map(()=>'<span></span>').join('')+'</div>':'')+
+       '</div>';}
+  return h+'</div>';}
+
+function izberiDan(d){izbranDan=d;risi();
+  setTimeout(()=>{const e=document.getElementById('dan-detajl');if(e)e.scrollIntoView({behavior:'smooth',block:'center'});},60);}
+
+function terminiDneva(d){
+  const dateStr=kalYear+'-'+String(kalMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+  const t=REZ.filter(r=>r.datum===dateStr);
+  if(!t.length)return '<div style="color:var(--siva);font-size:13px;padding:12px 0">Ta dan ni podatkov.</div>';
+  return t.map((r)=>'<div class="termin" onclick="podrobno('+REZ.indexOf(r)+')">'+
+    '<div class="cas2">'+r.ura+'</div><div class="kdo"><b>'+r.ime+'</b><span>'+r.stor+'</span></div>'+
+    '<div><span class="zn '+r.status+'">'+({caka:'čaka',potrjeno:'potrjeno',koncano:'končano'})[r.status]+'</span></div>'+
+    '<div style="width:56px;text-align:right;font-weight:600">'+(r.cena?r.cena+' €':'')+'</div></div>').join('');}
+
+function podrobno(i){const r=REZ[i];if(!r)return;
+  $('#okno').innerHTML='<div class="g3"><h4>Rezervacija</h4><button onclick="zapri()">×</button></div>'+
+   '<div class="b3">'+
+   [['Gost',r.ime],['Storitev',r.stor],['Datum',r.datum],['Ura',r.ura],
+    ['Status',({caka:'Čaka potrditev',potrjeno:'Potrjeno',koncano:'Zaključeno'})[r.status]]]
+   .map(x=>'<div><span>'+x[0]+'</span><span>'+x[1]+'</span></div>').join('')+'</div>'+
+   '<div class="n3"><button onclick="zapri()">Zapri</button></div>';
+  $('#zaslon').classList.add('on');}
+function zapri(){$('#zaslon').classList.remove('on');}
+function filter(k){fKanal=k;risi();}
+function status(s){fStatus=s;risi();}
+function isci(v){iskanje=v.toLowerCase();risi();}
+
+function praznoStanje(sporocilo){
+  return '<div style="color:var(--siva);font-size:13px;padding:20px 0;text-align:center">'+sporocilo+'</div>';}
+
+function risi(){
+ const d=P[obd], rez=vObd(obd);
+ const opisi={};
+
+ const todayD=NOW.getDate();
+ const todayDateStr=NOW.toISOString().slice(0,10);
+ const todayPod=DNEVI_P[NOW.getDay()]+', '+todayD+'. '+MESI[NOW.getMonth()];
+
+ $('#s-pregled').innerHTML=kartice(d,rez)+
+  '<div class="dve2"><div class="plosca"><h3>Najbolj iskane storitve</h3><div class="pod">Klikni vrstico za podrobnosti</div>'+
+   (poStoritvah(rez).length?palice(poStoritvah(rez),'',opisi):praznoStanje('Ni povpraševanj v izbranem obdobju.'))+'</div>'+
+  '<div class="plosca"><h3>Danes</h3><div class="pod">'+todayPod+'</div>'+
+   (()=>{const t=REZ.filter(r=>r.datum===todayDateStr);
+     return t.length?t.map((r)=>'<div class="termin" onclick="podrobno('+REZ.indexOf(r)+')">'+
+       '<div class="cas2">'+r.ura+'</div><div class="kdo"><b>'+r.ime+'</b><span>'+r.stor+'</span></div>'+
+       '<div><span class="zn '+r.status+'">'+({caka:'čaka',potrjeno:'potrjeno',koncano:'končano'})[r.status]+'</span></div></div>').join(''):
+       '<div style="color:var(--siva);font-size:13px;padding:12px 0">Danes ni novih povpraševanj.</div>';})()
+  +'</div></div>'+
+  '<div class="plosca"><h3>Trend zadnjih šestih mesecev</h3>'+
+   '<div class="pod">Rezervacije skupaj, ločeno novi in vrnjeni gostje</div>'+svgTrend()+
+   '<div class="nasvet"><b>Kaj kaže:</b> rezervacije rastejo peti mesec zapored, '+
+   'in rastejo predvsem vrnjeni gostje — to je bolj zdrava rast kot pridobivanje novih.</div></div>'+
+  '<div class="dve"><div class="plosca"><h3>Od kod pridejo gostje</h3><div class="pod">Vir obiska spletne strani</div>'+
+   (d.viri&&d.viri.length?palice(d.viri,'s'):praznoStanje('Podatki o spletnih virih niso na voljo.'))+'<div class="nasvet"><b>Google je največji vir in ne stane nič.</b> Splača se dopolniti opise storitev.</div></div>'+
+  '<div class="plosca"><h3>Kdaj se rezervira</h3><div class="pod">Temnejše polje pomeni več rezervacij</div>'+
+   toplota(rez)+'<div class="nasvet"><b>Priložnost:</b> nedelja zvečer je najmočnejši termin, objav pa takrat ni nobene.</div></div></div>';
+
+ const kolMesec=MESI[kalMonth].charAt(0).toUpperCase()+MESI[kalMonth].slice(1)+' '+kalYear;
+ $('#s-koledar').innerHTML='<div class="plosca"><h3>'+kolMesec+'</h3>'+
+   '<div class="pod">Klikni dan za seznam</div>'+koledar()+'</div>'+
+   (izbranDan?'<div class="plosca" id="dan-detajl"><h3>'+izbranDan+'. '+MESI[kalMonth]+'</h3>'+
+     '<div class="pod">'+DNEVI[new Date(kalYear,kalMonth,izbranDan).getDay()]+' · '+
+     REZ.filter(r=>r.datum===kalYear+'-'+String(kalMonth+1).padStart(2,'0')+'-'+String(izbranDan).padStart(2,'0')).length+' zapisov</div>'+
+     terminiDneva(izbranDan)+'</div>':'');
+
+ let sez=rez.filter(r=>(fStatus==='vsi'||r.status===fStatus)&&
+   (!iskanje||r.ime.toLowerCase().includes(iskanje)||r.stor.toLowerCase().includes(iskanje)));
+ $('#s-rezervacije').innerHTML='<div class="plosca"><h3>Rezervacije</h3>'+
+   '<div class="pod">'+sez.length+' zapisov · klikni vrstico za podrobnosti</div>'+
+   '<div class="filtri">'+[['vsi','Vse'],['caka','Čakajo'],['potrjeno','Potrjene'],['koncano','Zaključene']]
+     .map(s=>'<button onclick="status(\''+s[0]+'\')" class="'+(fStatus===s[0]?'on':'')+'">'+s[1]+'</button>').join('')+
+   '<input placeholder="Išči po imenu ali storitvi…" value="'+iskanje+'" oninput="isci(this.value)"></div>'+
+   '<table><tr><th>Datum</th><th>Ura</th><th>Gost</th><th>Storitev</th><th>Vir</th><th>Status</th></tr>'+
+   (sez.length?sez.map(r=>'<tr onclick="podrobno('+REZ.indexOf(r)+')"><td>'+r.datum+'</td><td>'+r.ura+'</td>'+
+     '<td>'+r.ime+'</td><td>'+r.stor+'</td><td style="color:var(--siva)">'+r.vir+'</td>'+
+     '<td><span class="zn '+r.status+'">'+({caka:'čaka',potrjeno:'potrjeno',koncano:'končano'})[r.status]+'</span></td>'+
+     '</tr>').join('')
+    :'<tr><td colspan="6" style="text-align:center;color:var(--siva);padding:34px">Ni zadetkov.</td></tr>')+'</table></div>';
+
+ const g=d.gostje, sk=(g.novi||0)+(g.vrnjeni||0)||1;
+ $('#s-gostje').innerHTML='<div class="kartice">'+
+   '<div class="k p"><div class="lbl">Novi gostje</div><div class="num">'+(g.novi||0)+'</div><div class="spr" style="color:var(--siva)">'+Math.round((g.novi||0)/sk*100)+' % vseh</div></div>'+
+   '<div class="k"><div class="lbl">Vrnjeni gostje</div><div class="num">'+(g.vrnjeni||0)+'</div><div class="spr" style="color:var(--siva)">'+Math.round((g.vrnjeni||0)/sk*100)+' % vseh</div></div>'+
+   '<div class="k"><div class="lbl">Obiskov na gosta</div><div class="num">'+(g.pogostost||'-')+'</div><div class="spr" style="color:var(--siva)">v zadnjih 6 mesecih</div></div>'+
+   '<div class="k"><div class="lbl">Se vrnejo</div><div class="num">'+(g.zadrzanje||'-')+'</div><div class="spr" style="color:var(--siva)">v treh mesecih</div></div></div>'+
+
+   '<div class="plosca"><h3>Kdo pride najpogosteje</h3>'+
+   '<div class="pod">Gostje z največ obiski v zadnjih šestih mesecih · zaradi zasebnosti samo začetnice</div>'+
+   (STALNI.length?'<table><tr><th>Gost</th><th>Najpogosteje jemlje</th><th>Segment</th>'+
+   '<th style="text-align:right">Obiskov</th><th style="text-align:right">Zadnjič</th></tr>'+
+   STALNI.map(s=>'<tr><td><b>'+s.ime+'</b></td><td>'+s.najljub+'</td>'+
+     '<td><span class="zn">'+s.segment+'</span></td><td class="d">'+s.obiski+'</td>'+
+     '<td class="d" style="font-weight:400;color:var(--siva)">'+s.zadnji+'</td></tr>').join('')+'</table>':
+   praznoStanje('Gostje se pokažejo, ko isti gost pride vsaj enkrat.'))+'</div>'+
+
+   '<div class="dve"><div class="plosca"><h3>Zakaj pridejo</h3>'+
+   '<div class="pod">Segment se določi iz prve storitve, dneva in vira</div>'+
+   (SEGMENTI.length?'<table><tr><th>Segment</th><th style="text-align:right">Gostov</th><th style="text-align:right">Se vrne</th></tr>'+
+   SEGMENTI.map(s=>'<tr onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display===\'table-row\'?\'none\':\'table-row\'">'+
+     '<td><b>'+s[0]+'</b></td><td class="d">'+s[1]+'</td>'+
+     '<td class="d" style="color:'+(parseInt(s[2])>50?'#5F8D4E':parseInt(s[2])<20?'#C0605A':'#8A7442')+'">'+s[2]+'</td></tr>'+
+     '<tr style="display:none"><td colspan="3" style="background:#FBF8F2;color:var(--siva);font-size:12.5px">'+s[3]+'</td></tr>').join('')+'</table>':
+   praznoStanje('Segmenti se zapolnijo z več podatki.'))+'</div>'+
+
+   '<div class="plosca"><h3>Od kod pride gost</h3>'+
+   '<div class="pod">Vir rezervacije in koliko od njih se vrne</div>'+
+   (VIRI_ZVESTOBA.length?'<table><tr><th>Vir</th><th style="text-align:right">Rezervacij</th><th style="text-align:right">Se vrne</th></tr>'+
+   VIRI_ZVESTOBA.map(v=>'<tr><td>'+v[0]+'</td><td class="d">'+v[1]+'</td>'+
+     '<td class="d" style="color:'+(parseInt(v[2])>50?'#5F8D4E':'#8A7442')+'">'+v[2]+'</td></tr>').join('')+'</table>':
+   praznoStanje('Podatki o virih se zapolnijo z več podatki.'))+'</div></div>';
+
+ const obj=(d.objave||[]).filter(o=>fKanal==='vsi'||o[1]===fKanal);
+ $('#s-objave').innerHTML='<div class="plosca"><h3>Objave</h3><div class="pod">Kaj je pripeljalo goste, ne le ogledov</div>'+
+   '<div class="filtri">'+['vsi','Instagram','Facebook','TikTok'].map(k=>
+     '<button onclick="filter(\''+k+'\')" class="'+(fKanal===k?'on':'')+'">'+(k==='vsi'?'Vsi kanali':k)+'</button>').join('')+'</div>'+
+   (obj.length?'<table><tr><th>Objava</th><th>Kanal</th><th style="text-align:right">Ogledi</th><th style="text-align:right">Odziv</th><th style="text-align:right">Klikov na rezervacijo</th></tr>'+
+   obj.map(o=>'<tr><td>'+o[0]+'</td><td><span class="'+o[2]+'">'+o[1]+'</span></td><td class="d">'+stev(o[3])+'</td><td class="d">'+o[4]+'</td><td class="d">'+o[5]+'</td></tr>').join('')+'</table>':
+   praznoStanje('Ni podatkov o objavah. Možna integracija z Meta Business Suite.'))+''+
+   '<div class="nasvet"><b>Kaj to pomeni:</b> TikTok ima največ ogledov in najmanj rezervacij, Instagram obratno. Za goste Instagram, za prepoznavnost TikTok.</div></div>';
+
+ const oglasi=d.oglasi||[];
+ const sp=oglasi.reduce((s,o)=>s+(o[1]||0),0);
+ const rz=oglasi.reduce((s,o)=>s+(o[2]||0),0);
+ const prih=rez.reduce((s,r)=>s+(r.cena||0),0);
+ $('#s-oglasi').innerHTML='<div class="kartice">'+
+   '<div class="k"><div class="lbl">Poraba</div><div class="num">'+(sp?sp+' €':'-')+'</div></div>'+
+   '<div class="k p"><div class="lbl">Rezervacije iz oglasov</div><div class="num">'+(rz||'-')+'</div></div>'+
+   '<div class="k"><div class="lbl">Cena rezervacije</div><div class="num">'+(sp&&rz?(sp/rz).toFixed(1)+' €':'-')+'</div></div>'+
+   '<div class="k"><div class="lbl">Vrnjeno na vložek</div><div class="num">'+(prih&&sp?(prih/sp).toFixed(1)+'×':'-')+'</div>'+
+     '<div class="spr" style="color:var(--siva)">prihodek proti porabi</div></div></div>'+
+   '<div class="plosca"><h3>Kampanje</h3><div class="pod">Koliko stane ena rezervacija</div>'+
+   (oglasi.length?'<table><tr><th>Kampanja</th><th style="text-align:right">Poraba</th><th style="text-align:right">Rezervacij</th><th style="text-align:right">Cena rezervacije</th></tr>'+
+   oglasi.map(o=>'<tr><td>'+o[0]+'</td><td class="d">'+o[1]+' €</td><td class="d">'+o[2]+'</td>'+
+     '<td class="d" style="color:'+(o[1]/o[2]>15?'#C0605A':'#5F8D4E')+'">'+(o[1]/o[2]).toFixed(1)+' €</td></tr>').join('')+'</table>':
+   praznoStanje('Ni podatkov o oglasih. Možna integracija z Meta Ads.'))+''+
+   '<div class="nasvet"><b>Predlog:</b> kampanja za pare prinese gosta trikrat ceneje od splošne. Z istim denarjem bi lahko imeli približno tretjino več rezervacij.</div></div>';
+
+ $('#s-pogovori').innerHTML='<div class="dve2"><div class="plosca"><h3>Zadnji pogovori</h3>'+
+   '<div class="pod">Klikni pogovor za celoten potek</div>'+
+   (POGOVORI.length?POGOVORI.map((p)=>'<div class="pog" onclick="this.classList.toggle(\'on\')">'+
+     '<div class="gl2"><b>'+p.v+'</b><span>'+p.c+'</span></div>'+
+     '<p>'+(p.o?'Pomočnik je odgovoril':'<span style="color:#B4544E">Pomočnik ni znal odgovoriti</span>')+' · '+p.p.length+' sporočil</p>'+
+     '<div class="telo">'+p.p.map(m=>'<div class="msg '+(m[0]==='gost'?'g':'b')+'"><b>'+(m[0]==='gost'?'gost':'pomočnik')+'</b>'+m[1]+'</div>').join('')+'</div></div>').join(''):
+   praznoStanje('Ni pogovorov. Pogovori se pojavijo, ko obiskovalci pišejo pomočniku.'))+'</div>'+
+   '<div class="plosca"><h3>Najpogostejša vprašanja</h3><div class="pod">V izbranem obdobju</div>'+
+   (VPRASANJA.length?VPRASANJA.map(v=>'<div class="vpr"><span>'+v[0]+(v[2]?' <span class="zn v" style="margin-left:6px">brez odgovora</span>':'')+'</span><b>'+v[1]+'×</b></div>').join(''):
+   praznoStanje('Ni vprašanj. Vprašanja se zbirajo iz pogovorov pomočnika.'))+''+
+   '<div class="nasvet"><b>Pozor:</b> vsako vprašanje brez odgovora je hkrati ideja za novo vsebino na strani.</div></div></div>';
+
+ const predlogi = window._predlogi || [];
+ const vsiPredlogi = predlogi.length ? predlogi :
+   [['Odstavek o savni v nosečnosti','Redno vprašanje, na katero pomočnik nima odgovora'],
+    ['Ponudba paketov za podjetja','Pogosto vprašano, ponudbe za podjetja še ni']];
+ $('#s-predlogi').innerHTML='<div class="plosca"><h3>Predlogi za naslednji teden</h3><div class="pod">Odkljukaj, ko je narejeno</div>'+
+   vsiPredlogi.map((p,i)=>'<label class="opr"><input type="checkbox" onchange="this.closest(\'.opr\').classList.toggle(\'dn\',this.checked)">'+
+     '<div class="stev">'+(i+1)+'</div><div class="t"><b>'+p[0]+'</b><span>'+p[1]+'</span></div></label>').join('')+'</div>';
+}
+
+/* --- init --- */
+if(panelKey) {
+  document.getElementById('loginZaslon').style.display = 'none';
+  fetchAll();
+} else {
+  document.getElementById('loginGeslo').focus();
+}
+</script>
+</body>
+</html>

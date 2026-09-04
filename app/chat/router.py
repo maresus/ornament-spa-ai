@@ -257,3 +257,143 @@ def get_conversations(key: str = Query(default=""), hours: int = Query(default=2
     cutoff = (datetime.now(timezone.utc) - timedelta(hours=hours)).strftime("%Y-%m-%d %H:%M:%S")
     filtered = [c for c in _conversations if c.get("created_at", "") >= cutoff]
     return {"conversations": list(reversed(filtered)), "total": len(filtered)}
+
+
+# ── PANEL V2 ─────────────────────────────────────────────────────────────────
+
+@admin_router.get("/panel", response_class=HTMLResponse)
+def panel_page():
+    panel_html_path = Path(__file__).parent.parent.parent / "static" / "panel.html"
+    if panel_html_path.exists():
+        html = panel_html_path.read_text(encoding="utf-8")
+        return HTMLResponse(content=html)
+    return HTMLResponse(content="<h1>Panel se nalaga...</h1>")
+
+
+def _initials(ime: str) -> str:
+    parts = ime.strip().split()
+    if not parts:
+        return "?"
+    return ". ".join(p[0].upper() for p in parts if p) + "."
+
+
+@admin_router.get("/api/panel/rezervacije")
+def panel_rezervacije(key: str = Query(default=""), od: str = Query(default=""), do: str = Query(default="")):
+    _check_admin(key)
+    result = list(_inquiries)
+    if od:
+        result = [i for i in result if i.get("created_at", "") >= od]
+    if do:
+        result = [i for i in result if i.get("created_at", "") <= do]
+    def fmt(inq):
+        return {
+            "id": inq["id"],
+            "ime": _initials(inq.get("ime", "")),
+            "tip": inq.get("tip", "-"),
+            "status": inq.get("status", "caka"),
+            "created_at": inq.get("created_at", ""),
+            "admin_notes": inq.get("admin_notes", ""),
+        }
+    return {"rezervacije": [fmt(i) for i in reversed(result)], "total": len(result)}
+
+
+@admin_router.get("/api/panel/trend")
+def panel_trend(key: str = Query(default=""), mesecev: int = Query(default=6)):
+    _check_admin(key)
+    now = datetime.now(timezone.utc)
+    meseci = ["jan","feb","mar","apr","maj","jun","jul","avg","sep","okt","nov","dec"]
+    result = []
+    for i in range(mesecev - 1, -1, -1):
+        m = now.month - i
+        y = now.year + (m - 1) // 12
+        m = ((m - 1) % 12) + 1
+        prefix = f"{y}-{m:02d}"
+        count = sum(1 for inq in _inquiries if inq.get("created_at", "").startswith(prefix))
+        result.append([meseci[m - 1], count, 0, count])
+    return {"trend": result}
+
+
+@admin_router.get("/api/panel/gostje")
+def panel_gostje(key: str = Query(default="")):
+    _check_admin(key)
+    by_phone: dict = {}
+    for inq in _inquiries:
+        phone = (inq.get("telefon") or "").strip()
+        if not phone:
+            continue
+        by_phone.setdefault(phone, []).append(inq)
+
+    stalni = []
+    for phone, inqs in by_phone.items():
+        tips = [i.get("tip", "") for i in inqs if i.get("tip") and i.get("tip") != "-"]
+        najljub = max(set(tips), key=tips.count) if tips else "-"
+        last = sorted(inqs, key=lambda x: x.get("created_at", ""))[-1]
+        last_date = last.get("created_at", "")[:10]
+        stalni.append({
+            "ime": _initials(inqs[0].get("ime", "")),
+            "obiski": len(inqs),
+            "najljub": najljub,
+            "zadnji": last_date,
+            "segment": "Redna nega",
+        })
+    stalni.sort(key=lambda x: x["obiski"], reverse=True)
+
+    novi = sum(1 for inqs in by_phone.values() if len(inqs) == 1)
+    vrnjeni = sum(1 for inqs in by_phone.values() if len(inqs) > 1)
+    return {
+        "stalni": stalni[:10],
+        "segmenti": [],
+        "viri_zvestoba": [],
+        "gostje": {"novi": novi, "vrnjeni": vrnjeni, "pogostost": "-", "zadrzanje": "-"},
+    }
+
+
+@admin_router.get("/api/panel/pogovori")
+def panel_pogovori(key: str = Query(default=""), limit: int = Query(default=20)):
+    _check_admin(key)
+    sessions: dict = {}
+    for conv in _conversations:
+        sid = conv.get("session_id", "")
+        sessions.setdefault(sid, []).append(conv)
+
+    result = []
+    sorted_sessions = sorted(sessions.items(),
+                              key=lambda x: x[1][-1].get("created_at", ""),
+                              reverse=True)[:limit]
+    for sid, msgs in sorted_sessions:
+        first_user = msgs[0].get("user_message", "") if msgs else ""
+        last_time = msgs[-1].get("created_at", "") if msgs else ""
+        has_fallback = any("nimam podatka" in m.get("bot_response", "").lower() or
+                           "to ni moje področje" in m.get("bot_response", "").lower()
+                           for m in msgs)
+        pairs = []
+        for m in msgs:
+            pairs.append(["gost", m.get("user_message", "")])
+            pairs.append(["bot", m.get("bot_response", "")])
+        result.append({
+            "c": last_time,
+            "v": first_user[:80],
+            "o": 0 if has_fallback else 1,
+            "p": pairs,
+        })
+    return {"pogovori": result}
+
+
+@admin_router.get("/api/panel/vprasanja")
+def panel_vprasanja(key: str = Query(default=""), obdobje: str = Query(default="teden")):
+    _check_admin(key)
+    from collections import Counter
+    msgs = [c.get("user_message", "").strip() for c in _conversations if c.get("user_message")]
+    counter = Counter(msgs)
+    result = [[msg, count, 0] for msg, count in counter.most_common(10) if msg]
+    return {"vprasanja": result}
+
+
+@admin_router.get("/api/panel/predlogi")
+def panel_predlogi(key: str = Query(default="")):
+    _check_admin(key)
+    return {"predlogi": [
+        ["Odstavek o savni v nosečnosti", "Redno vprašanje, na katero pomočnik nima odgovora"],
+        ["Ponudba paketov za podjetja", "Pogosto vprašano, ponudbe za podjetja še ni"],
+        ["Objava v nedeljo zvečer", "Takrat je največ rezervacij, objav pa nobene"],
+    ]}
