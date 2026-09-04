@@ -448,21 +448,17 @@ _OBJAVE = {
     "teden": [
         ["Zasebni wellness za dva — nedeljski večer", "Instagram", "zn",   4820, 312, 41],
         ["Access Bars® — kaj sploh je",               "Facebook",  "zn v", 2140,  96, 17],
-        ["Masaža hrbta v 30 sekundah",                "TikTok",    "zn t", 9630, 184,  9],
         ["Jutranja savna — zakaj deluje",             "Instagram", "zn",   1780,  74,  6],
     ],
     "prej": [
-        ["Darilni bon za rojstni dan",  "Facebook",  "zn v", 1920, 88, 14],
-        ["Nova terapija Access Lift",   "Instagram", "zn",   2260, 131, 11],
-        ["E-kolo po Dolenjski",         "TikTok",    "zn t", 5410, 97,   3],
+        ["Darilni bon za rojstni dan", "Facebook",  "zn v", 1920, 88, 14],
+        ["Nova terapija Access Lift",  "Instagram", "zn",   2260, 131, 11],
     ],
     "mesec": [
         ["Zasebni wellness za dva — nedeljski večer", "Instagram", "zn",   4820, 312, 41],
         ["Nova terapija Access Lift",                 "Instagram", "zn",   2260, 131, 11],
-        ["Masaža hrbta v 30 sekundah",                "TikTok",    "zn t", 9630, 184,  9],
         ["Darilni bon za rojstni dan",                "Facebook",  "zn v", 1920,  88, 14],
         ["Access Bars® — kaj sploh je",               "Facebook",  "zn v", 2140,  96, 17],
-        ["E-kolo po Dolenjski",                       "TikTok",    "zn t", 5410,  97,  3],
     ],
 }
 

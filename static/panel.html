@@ -594,12 +594,12 @@ function risi(){
 
  const obj=(d.objave||[]).filter(o=>fKanal==='vsi'||o[1]===fKanal);
  $('#s-objave').innerHTML='<div class="plosca"><h3>Objave</h3><div class="pod">Kaj je pripeljalo goste, ne le ogledov</div>'+
-   '<div class="filtri">'+['vsi','Instagram','Facebook','TikTok'].map(k=>
+   '<div class="filtri">'+['vsi','Instagram','Facebook'].map(k=>
      '<button onclick="filter(\''+k+'\')" class="'+(fKanal===k?'on':'')+'">'+(k==='vsi'?'Vsi kanali':k)+'</button>').join('')+'</div>'+
    (obj.length?'<table><tr><th>Objava</th><th>Kanal</th><th style="text-align:right">Ogledi</th><th style="text-align:right">Odziv</th><th style="text-align:right">Klikov na rezervacijo</th></tr>'+
    obj.map(o=>'<tr><td>'+o[0]+'</td><td><span class="'+o[2]+'">'+o[1]+'</span></td><td class="d">'+stev(o[3])+'</td><td class="d">'+o[4]+'</td><td class="d">'+o[5]+'</td></tr>').join('')+'</table>':
    praznoStanje('Ni podatkov o objavah. Možna integracija z Meta Business Suite.'))+''+
-   '<div class="nasvet"><b>Kaj to pomeni:</b> TikTok ima največ ogledov in najmanj rezervacij, Instagram obratno. Za goste Instagram, za prepoznavnost TikTok.</div></div>';
+   '<div class="nasvet"><b>Kaj to pomeni:</b> Instagram objave prinesejo največ rezervacij — splača se objavljati redno, posebej ob nedeljah zvečer.</div></div>';
 
  const oglasi=d.oglasi||[];
  const sp=oglasi.reduce((s,o)=>s+(o[1]||0),0);
