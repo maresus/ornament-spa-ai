@@ -297,13 +297,16 @@ document.getElementById('loginGeslo').addEventListener('keydown', e => { if(e.ke
 
 async function fetchAll() {
   try {
-    const [rezD, trendD, gostjeD, pogD, vprD, predD] = await Promise.all([
+    const [rezD, trendD, gostjeD, pogD, vprD, predD, ogT, ogP, ogM] = await Promise.all([
       apiGet('/api/panel/rezervacije'),
       apiGet('/api/panel/trend'),
       apiGet('/api/panel/gostje'),
       apiGet('/api/panel/pogovori?limit=20'),
       apiGet('/api/panel/vprasanja'),
       apiGet('/api/panel/predlogi'),
+      apiGet('/api/panel/oglasi?obdobje=teden'),
+      apiGet('/api/panel/oglasi?obdobje=prej'),
+      apiGet('/api/panel/oglasi?obdobje=mesec'),
     ]);
 
     REZ = (rezD.rezervacije || []).map(inq => {
@@ -357,6 +360,9 @@ async function fetchAll() {
     }
 
     P = { teden: buildObd(tRez, pRez), prej: buildObd(pRez, ppRez), mesec: buildObd(mRez, pmRez) };
+    P.teden.oglasi = ogT.oglasi || [];
+    P.prej.oglasi  = ogP.oglasi || [];
+    P.mesec.oglasi = ogM.oglasi || [];
 
     const ts = new Date().toLocaleTimeString('sl-SI', {hour:'2-digit',minute:'2-digit'});
     document.getElementById('nogaS').innerHTML = 'Osveženo ob ' + ts + '<br><b style="color:#8A6D2C">Ornament Panel · v živo</b>';

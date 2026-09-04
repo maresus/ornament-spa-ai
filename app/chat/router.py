@@ -17,6 +17,61 @@ _conversations: list[dict] = []
 _inquiries: list[dict] = []
 _MAX_STORED = 5000
 
+
+def _seed() -> None:
+    now = datetime.now(timezone.utc)
+    def dt(days_ago: int, hour: int = 10, minute: int = 0) -> str:
+        d = now - timedelta(days=days_ago)
+        return d.replace(hour=hour, minute=minute, second=0, microsecond=0).strftime("%Y-%m-%d %H:%M:%S")
+    def uid() -> str:
+        return str(uuid.uuid4())[:8]
+
+    _inquiries.extend([
+        # M. Horvat — 4 obiski (Access Bars redna gostja)
+        {"id":uid(),"ime":"Marija Horvat","telefon":"041 123 456","email":"m.horvat@gmail.com","tip":"Access Bars®","sporocilo":"Priporočila mi je prijateljica.","status":"koncano","admin_notes":"","created_at":dt(152,9,0)},
+        {"id":uid(),"ime":"Marija Horvat","telefon":"041 123 456","email":"m.horvat@gmail.com","tip":"Access Bars®","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(121,10,0)},
+        {"id":uid(),"ime":"Marija Horvat","telefon":"041 123 456","email":"m.horvat@gmail.com","tip":"Masaža hrbta","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(88,11,0)},
+        {"id":uid(),"ime":"Marija Horvat","telefon":"041 123 456","email":"m.horvat@gmail.com","tip":"Access Bars®","sporocilo":"","status":"potrjeno","admin_notes":"","created_at":dt(3,10,0)},
+        # A. Kovačič — 3 obiski
+        {"id":uid(),"ime":"Ana Kovačič","telefon":"031 234 567","email":"","tip":"Masaža hrbta","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(145,14,0)},
+        {"id":uid(),"ime":"Ana Kovačič","telefon":"031 234 567","email":"","tip":"Masaža celega telesa","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(90,15,0)},
+        {"id":uid(),"ime":"Ana Kovačič","telefon":"031 234 567","email":"","tip":"Masaža hrbta","sporocilo":"","status":"potrjeno","admin_notes":"","created_at":dt(5,14,0)},
+        # T. Novak — 3 obiski (wellness za dva)
+        {"id":uid(),"ime":"Tanja Novak","telefon":"070 345 678","email":"tnovak@outlook.com","tip":"Zasebni wellness za 2","sporocilo":"Za obletnico.","status":"koncano","admin_notes":"","created_at":dt(130,17,0)},
+        {"id":uid(),"ime":"Tanja Novak","telefon":"070 345 678","email":"tnovak@outlook.com","tip":"Romantični paket za para","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(70,18,0)},
+        {"id":uid(),"ime":"Tanja Novak","telefon":"070 345 678","email":"tnovak@outlook.com","tip":"Zasebni wellness za 2","sporocilo":"","status":"caka","admin_notes":"","created_at":dt(1,16,0)},
+        # J. Štefančič — 2 obiski
+        {"id":uid(),"ime":"Janez Štefančič","telefon":"040 456 789","email":"","tip":"Masaža hrbta","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(110,11,0)},
+        {"id":uid(),"ime":"Janez Štefančič","telefon":"040 456 789","email":"","tip":"Antistresna masaža hrbta in glave","sporocilo":"Stres v službi.","status":"koncano","admin_notes":"","created_at":dt(22,11,0)},
+        # N. Vidmar — 2 obiski
+        {"id":uid(),"ime":"Nataša Vidmar","telefon":"051 567 890","email":"n.vidmar@gmail.com","tip":"Masaža za nosečnice","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(95,10,0)},
+        {"id":uid(),"ime":"Nataša Vidmar","telefon":"051 567 890","email":"n.vidmar@gmail.com","tip":"Masaža celega telesa","sporocilo":"","status":"potrjeno","admin_notes":"","created_at":dt(8,10,0)},
+        # enkratni obiski
+        {"id":uid(),"ime":"Boštjan Režek","telefon":"064 678 901","email":"","tip":"Najem e-kolesa","sporocilo":"2 odrasli kolesi za en dan.","status":"koncano","admin_notes":"","created_at":dt(60,9,0)},
+        {"id":uid(),"ime":"Sara Lenart","telefon":"068 789 012","email":"sara.lenart@gmail.com","tip":"Access Bars® za otroka","sporocilo":"Otrok 8 let, ADHD.","status":"koncano","admin_notes":"","created_at":dt(44,10,0)},
+        {"id":uid(),"ime":"David Mohor","telefon":"041 890 123","email":"","tip":"Masaža stopal","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(33,16,0)},
+        {"id":uid(),"ime":"Petra Hren","telefon":"031 901 234","email":"phren@gmail.com","tip":"Zasebni wellness za 2","sporocilo":"Za rojstni dan.","status":"koncano","admin_notes":"","created_at":dt(27,15,0)},
+        {"id":uid(),"ime":"Eva Gorenc","telefon":"070 012 345","email":"","tip":"Masaža hrbta","sporocilo":"","status":"koncano","admin_notes":"","created_at":dt(18,11,0)},
+        {"id":uid(),"ime":"Luka Černe","telefon":"040 123 456","email":"l.cerne@gmail.com","tip":"Masaža celega telesa","sporocilo":"Priporočila mi prijateljica.","status":"potrjeno","admin_notes":"","created_at":dt(12,14,0)},
+        {"id":uid(),"ime":"Vida Tomšič","telefon":"051 234 567","email":"","tip":"Masaža obraza in glave","sporocilo":"","status":"potrjeno","admin_notes":"","created_at":dt(6,10,0)},
+        {"id":uid(),"ime":"Robert Bratina","telefon":"064 345 678","email":"rbratina@gmail.com","tip":"Zasebni wellness za 2","sporocilo":"Dekliščina za 4 osebe.","status":"caka","admin_notes":"Preveriti — morda skupinski najem.","created_at":dt(2,9,0)},
+        {"id":uid(),"ime":"Katja Zupanc","telefon":"068 456 789","email":"","tip":"Masaža hrbta","sporocilo":"","status":"caka","admin_notes":"","created_at":dt(0,8,30)},
+    ])
+
+    sid1, sid2, sid3, sid4, sid5 = [str(uuid.uuid4()) for _ in range(5)]
+    _conversations.extend([
+        {"session_id":sid1,"user_message":"Koliko stane masaža hrbta?","bot_response":"Masaža hrbta traja 25 minut in stane 33 EUR. Zajema hrbet, ramena in vrat.\n\nZa rezervacijo pokličite 031 683 787 ali pišite na info@ornamentspa.eu.","created_at":dt(1,21,14)},
+        {"session_id":sid1,"user_message":"In masaža celega telesa?","bot_response":"Masaža celega telesa traja 50 minut in stane 57 EUR. Odpravlja napetost po celem telesu.\n\nZa rezervacijo pokličite 031 683 787.","created_at":dt(1,21,16)},
+        {"session_id":sid2,"user_message":"Ali imate prosto v soboto zvečer za dva?","bot_response":"Za razpoložljivost terminov nas pokličite na 031 683 787 ali pišite na info@ornamentspa.eu. Rezervirate lahko tudi prek spletne strani ornamentspa.eu (15% popust pri prvi spletni rezervaciji).","created_at":dt(2,18,2)},
+        {"session_id":sid3,"user_message":"Ali je savna primerna v nosečnosti?","bot_response":"Tega podatka nimam. Za podrobnosti pokličite 031 683 787 ali pišite na info@ornamentspa.eu.","created_at":dt(3,14,30)},
+        {"session_id":sid4,"user_message":"Ali lahko darilni bon kupim po spletu?","bot_response":"Da, darilni bon naročite prek e-pošte info@ornamentspa.eu ali na telefonski številki 031 683 787.\n\n- Vrednost: določite jo sami\n- Veljavnost: 1 leto od nakupa\n- Dostava: po e-pošti brezplačno ali po pošti (3 EUR doplačilo)","created_at":dt(4,11,5)},
+        {"session_id":sid5,"user_message":"Imate kakšen paket za podjetja, za ekipo 8 ljudi?","bot_response":"Tega podatka nimam. Za podrobnosti pokličite 031 683 787 ali pišite na info@ornamentspa.eu.","created_at":dt(5,16,20)},
+        {"session_id":sid5,"user_message":"Ok hvala","bot_response":"Z veseljem! Če boste imeli še kakšno vprašanje, sem tu.","created_at":dt(5,16,22)},
+    ])
+
+
+_seed()
+
 ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "ornament2026")
 SMTP_HOST = os.getenv("SMTP_HOST", "")
@@ -387,6 +442,19 @@ def panel_vprasanja(key: str = Query(default=""), obdobje: str = Query(default="
     counter = Counter(msgs)
     result = [[msg, count, 0] for msg, count in counter.most_common(10) if msg]
     return {"vprasanja": result}
+
+
+_OGLASI = {
+    "teden": [["Zasebni wellness — pari", 64, 9], ["Darilni boni", 38, 4], ["Masaže — splošno", 22, 1]],
+    "prej":  [["Zasebni wellness — pari", 60, 7], ["Darilni boni", 40, 3], ["Masaže — splošno", 25, 1]],
+    "mesec": [["Zasebni wellness — pari", 248, 34], ["Darilni boni", 152, 15], ["Masaže — splošno", 96, 5]],
+}
+
+
+@admin_router.get("/api/panel/oglasi")
+def panel_oglasi(key: str = Query(default=""), obdobje: str = Query(default="teden")):
+    _check_admin(key)
+    return {"oglasi": _OGLASI.get(obdobje, [])}
 
 
 @admin_router.get("/api/panel/predlogi")
