@@ -296,7 +296,7 @@
     const bubble = document.createElement('button');
     bubble.id = 'kv-widget-bubble';
     bubble.innerHTML = CONFIG.logoUrl
-      ? `<img src="${CONFIG.logoUrl}" alt="Ornament Spa" style="width:44px;height:44px;object-fit:contain;border-radius:8px;background:white;padding:3px;">`
+      ? `<img src="${CONFIG.logoUrl}" alt="Ornament Spa" style="width:50px;height:50px;object-fit:contain;border-radius:50%;background:white;padding:5px;" onerror="this.outerHTML='${icons.chat}'">`
       : icons.chat;
     bubble.onclick = function(e) { e.stopPropagation(); e.preventDefault(); setTimeout(togglePanel, 0); };
 
@@ -327,7 +327,7 @@
           <input type="text" id="kv-widget-input" placeholder="${CONFIG.placeholder}">
           <button id="kv-widget-send">${icons.send}</button>
         </div>
-        <div id="kv-widget-disclaimer">&#x1F916; Ta asistent je umetna inteligenca (AI) — EU AI Act cl. 50. Za rezervacijo pokli&#269;ite <a href="tel:+38631683787">031 683 787</a>.</div>
+        <div id="kv-widget-disclaimer">&#x1F916; AI asistent (EU AI Act, cl. 50). Za rezervacijo: <a href="tel:+38631683787">031 683 787</a>.</div>
         <div id="kv-widget-powered">built by: <a href="https://spoznaj-ai.si" target="_blank">spoznaj-ai.si</a></div>
       </div>
       <div id="mo-inquiry-form-view">
@@ -551,7 +551,7 @@
       addMessage(data.reply || 'Oprostite, prislo je do napake.', 'bot');
     } catch (err) {
       hideTyping();
-      addMessage('Oprostite, trenutno ni mozno vzpostaviti povezave. Pokli&#269;ite: 031 683 787.', 'bot');
+      addMessage('Oprostite, trenutno ni možno vzpostaviti povezave. Pokličite: 031 683 787.', 'bot');
     }
     sendBtn.disabled = false;
     input.focus();
@@ -584,8 +584,8 @@
       document.getElementById('mo-inquiry-form-scroll').style.display = 'none';
       document.getElementById('mo-inquiry-success').classList.add('kv-visible');
     } catch (e) {
-      alert('Napaka pri posiljanju. Pokli&#269;ite: 031 683 787');
-      btn.disabled = false; btn.textContent = 'Posji rezervacijo';
+      alert('Napaka pri pošiljanju. Pokličite: 031 683 787');
+      btn.disabled = false; btn.textContent = 'Pošlji rezervacijo';
     }
   }
 
