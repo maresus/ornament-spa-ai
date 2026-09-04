@@ -210,8 +210,14 @@
     .kv-field { margin-bottom: 11px; }
     .kv-field label { display: block; font-size: 12px; font-weight: 600; color: #444; margin-bottom: 4px; }
     .kv-field label span { color: #e53; }
-    .kv-field input, .kv-field textarea { width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 9px 12px; font-size: 13px; outline: none; transition: border-color 0.15s; background: #fff; font-family: inherit; }
-    .kv-field input:focus, .kv-field textarea:focus { border-color: ${CONFIG.accentColor}; }
+    .kv-field input, .kv-field textarea, .kv-field select { width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 9px 12px; font-size: 13px; outline: none; transition: border-color 0.15s; background: #fff; font-family: inherit; }
+    .kv-field input:focus, .kv-field textarea:focus, .kv-field select:focus { border-color: ${CONFIG.accentColor}; }
+    .kv-field select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath fill='%23888' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; cursor: pointer; }
+    .kv-field input[type=date] { cursor: pointer; }
+    .kv-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 380px) { .kv-field-row { grid-template-columns: 1fr; } }
+    .kv-field input[type=date], .kv-field select { font-size: 16px; }
+    @media (min-width: 400px) { .kv-field input[type=date], .kv-field select, .kv-field input, .kv-field textarea { font-size: 13px; } }
     .kv-field textarea { resize: vertical; min-height: 60px; }
 
     .kv-checkboxes { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
@@ -356,18 +362,101 @@
           </div>
           <div class="kv-field">
             <label>Storitev</label>
-            <div class="kv-checkboxes">
-              <label class="kv-checkbox-item"><input type="checkbox" value="Masaže"> Masaže</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Savne / wellness"> Savne</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Terapije"> Terapije</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Romantični paketi"> Za pare</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="Zasebni wellness"> Zasebni najem</label>
-              <label class="kv-checkbox-item"><input type="checkbox" value="E-kolo"> E-kolo</label>
+            <select id="jf-storitev">
+              <option value="">-- Izberite storitev --</option>
+              <optgroup label="Masaže">
+                <option>Masaža hrbta — 25 min, 33 €</option>
+                <option>Masaža celega telesa — 50 min, 57 €</option>
+                <option>Masaža obraza in glave — 30 min, 35 €</option>
+                <option>Masaža hrbta in nog — 40 min, 47 €</option>
+                <option>Masaža hrbta in stopal — 40 min, 45 €</option>
+                <option>Masaža stopal — 40 min, 45 €</option>
+                <option>Antistresna masaža hrbta in glave — 40 min, 47 €</option>
+                <option>Celostna masaža (telo, glava, obraz) — 90 min, 105 €</option>
+                <option>Personalizirana masaža Ornament — 50 min, 60 €</option>
+                <option>Energijska masaža — 50 min, 60 €</option>
+                <option>Masaža 5 kontinentov revitalizacija — 70 min, 90 €</option>
+                <option>Masaža 5 kontinentov kraljevska — 90 min, 120 €</option>
+                <option>Indijska masaža glave — 25 min, 30 €</option>
+                <option>Klasična masaža v dvoje — 45 min, 99 €</option>
+                <option>Masaža za nosečnice — 50 min, 60 €</option>
+                <option>Otroška masaža — 20 min, 25 €</option>
+              </optgroup>
+              <optgroup label="Savne — javni wellness">
+                <option>Savne — 2 uri, 25 €</option>
+                <option>Savne — 3 ure, 30 €</option>
+                <option>Savne — mesečna karta, 120 €</option>
+              </optgroup>
+              <optgroup label="Terapije Access Consciousness">
+                <option>Access Bars® — 60 min, 66 €</option>
+                <option>Access Bars® za otroka — 30 min, 30 €</option>
+                <option>Access Bars® za starša in otroka — 90 min, 85 €</option>
+                <option>Access Lift facelift — 60 min, 66 €</option>
+                <option>MTVSS energijska obnova — 60 min, 66 €</option>
+                <option>Masaža telesa + Access Bars® — 80 min, 85 €</option>
+              </optgroup>
+              <optgroup label="Romantični paketi za pare">
+                <option>Mini paket za pare — 3 h, 160 €</option>
+                <option>Maxi paket za pare — 4 h, 210 €</option>
+                <option>Romantična masaža v dvoje kraljevska — 60 min, 129 €</option>
+                <option>Romantično sproščanje, masažna kad — 90 min, 99 €</option>
+                <option>Zasebni wellness s penino in jagodami — 2,5 h, 145 €</option>
+                <option>Zasebni wellness in masaža za pare — 2,5 h, 149 €</option>
+                <option>Zasebni wellness s svečo in penino — 3,5 h, 259 €</option>
+              </optgroup>
+              <optgroup label="Zasebni wellness najem">
+                <option>Zasebni wellness — 2 osebi, 2,5 h, 120 €</option>
+                <option>Zasebni wellness — 2 osebi, 3,5 h, 150 €</option>
+                <option>Zasebni wellness — 3 osebe, 2,5 h, 160 €</option>
+                <option>Zasebni wellness — 4 osebe, 199 €</option>
+                <option>Zasebni wellness — 5 oseb, 215 €</option>
+                <option>Zasebni wellness — 6 oseb, 240 €</option>
+                <option>Baby Shower — 3 h, 250 €</option>
+                <option>Praznovanje v wellnessu — 3 h, 290 €</option>
+                <option>Dekliščina — 3 h, 250 €</option>
+              </optgroup>
+              <optgroup label="Tečaji">
+                <option>Tečaj masaže v dvoje — 3 h, 129 €</option>
+                <option>Tečaj klasične masaže — 388 €</option>
+              </optgroup>
+              <optgroup label="Najem e-kolesa">
+                <option>E-kolo odraslo — 2 h, 30 €</option>
+                <option>E-kolo odraslo — 4 h, 40 €</option>
+                <option>E-kolo odraslo — 1 dan, 45 €</option>
+                <option>E-kolo otroško — 1 dan, 35 €</option>
+              </optgroup>
+              <optgroup label="Ostalo">
+                <option>Darilni bon (vrednost po dogovoru)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="kv-field-row">
+            <div class="kv-field">
+              <label>Datum</label>
+              <input type="date" id="jf-datum">
+            </div>
+            <div class="kv-field">
+              <label>Želena ura</label>
+              <select id="jf-ura">
+                <option value="">-- Ura --</option>
+                <option>9:00</option>
+                <option>10:00</option>
+                <option>11:00</option>
+                <option>12:00</option>
+                <option>13:00</option>
+                <option>14:00</option>
+                <option>15:00</option>
+                <option>16:00</option>
+                <option>17:00</option>
+                <option>18:00</option>
+                <option>19:00</option>
+                <option>20:00</option>
+              </select>
             </div>
           </div>
           <div class="kv-field">
-            <label>Željeni termin ali sporočilo</label>
-            <textarea id="jf-sporocilo" placeholder="Npr. petek popoldne, 2 osebi..."></textarea>
+            <label>Sporočilo (neobvezno)</label>
+            <textarea id="jf-sporocilo" placeholder="Posebne želje, število oseb..."></textarea>
           </div>
           <button id="mo-inquiry-submit">Pošlji rezervacijo</button>
         </div>
@@ -582,6 +671,13 @@
     document.getElementById('mo-inquiry-form-view').classList.add('kv-visible');
     document.getElementById('mo-inquiry-success').classList.remove('kv-visible');
     document.getElementById('mo-inquiry-form-scroll').style.display = 'block';
+    var datEl = document.getElementById('jf-datum');
+    if (datEl) {
+      var today = new Date().toISOString().slice(0, 10);
+      var max = new Date(); max.setMonth(max.getMonth() + 3);
+      datEl.min = today;
+      datEl.max = max.toISOString().slice(0, 10);
+    }
   }
 
   function closeInquiryForm() {
@@ -592,10 +688,14 @@
   async function submitInquiryForm() {
     var ime = document.getElementById('jf-ime').value.trim();
     var telefon = document.getElementById('jf-telefon').value.trim();
-    if (!ime || !telefon) { alert('Prosimo, vnesite ime in telefonsko stevilko.'); return; }
-    var tipi = [];
-    document.querySelectorAll('.kv-checkboxes input[type=checkbox]:checked').forEach(function(cb) { tipi.push(cb.value); });
-    var payload = { ime: ime, telefon: telefon, email: '', tip: tipi.join(', ') || null, sporocilo: document.getElementById('jf-sporocilo').value.trim() || null };
+    if (!ime || !telefon) { alert('Prosimo, vnesite ime in telefonsko številko.'); return; }
+    var storitev = document.getElementById('jf-storitev').value;
+    var datum = document.getElementById('jf-datum').value;
+    var ura = document.getElementById('jf-ura').value;
+    var sporocilo = document.getElementById('jf-sporocilo').value.trim();
+    var termin = [datum, ura].filter(Boolean).join(' ob ');
+    var sporociloCelota = [termin ? 'Termin: ' + termin : '', sporocilo].filter(Boolean).join('\n');
+    var payload = { ime: ime, telefon: telefon, email: '', tip: storitev || null, sporocilo: sporociloCelota || null };
     var btn = document.getElementById('mo-inquiry-submit');
     btn.disabled = true; btn.textContent = 'Posiljam...';
     try {
