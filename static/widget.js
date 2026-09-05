@@ -138,6 +138,9 @@
       #kv-widget-input-area { padding-bottom: max(16px, env(safe-area-inset-bottom)) !important; padding-left: max(12px, env(safe-area-inset-left)) !important; padding-right: max(12px, env(safe-area-inset-right)) !important; flex-shrink: 0 !important; }
       #kv-widget-input { font-size: 16px !important; }
       #kv-widget-minimize { display: none !important; }
+      .kv-header-btn { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+      #kv-widget-disclaimer a, #kv-widget-powered a { display: inline-block; padding: 12px 6px; margin: -12px 0; }
+      #mo-inquiry-btn { min-height: 48px; }
     }
 
     #kv-widget-header {
@@ -304,6 +307,8 @@
 
     const bubble = document.createElement('button');
     bubble.id = 'kv-widget-bubble';
+    bubble.setAttribute('aria-label', 'Odpri pogovor s pomočnikom Ornament Spa');
+    bubble.setAttribute('aria-expanded', 'false');
     if (CONFIG.logoUrl) {
       var logoImg = document.createElement('img');
       logoImg.src = CONFIG.logoUrl;
@@ -550,6 +555,8 @@
       if (window.visualViewport) onViewportResize();
     }
     hideCards();
+    var bubbleEl = document.getElementById('kv-widget-bubble');
+    if (bubbleEl) bubbleEl.setAttribute('aria-expanded', 'true');
     document.getElementById('kv-widget-input').focus();
     localStorage.setItem('mh_widget_open', 'true');
     var messages = document.getElementById('kv-widget-messages');
@@ -564,6 +571,8 @@
     panel.style.cssText = '';
     document.body.style.overflow = '';
     document.getElementById('kv-launcher').style.display = 'flex';
+    var bubbleEl = document.getElementById('kv-widget-bubble');
+    if (bubbleEl) bubbleEl.setAttribute('aria-expanded', 'false');
     var btn = document.getElementById('kv-widget-minimize');
     if (btn) { btn.innerHTML = icons.minimize; btn.title = 'Minimiziraj'; }
     localStorage.setItem('mh_widget_open', 'false');
