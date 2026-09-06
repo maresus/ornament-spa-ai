@@ -2,7 +2,7 @@
 <html lang="sl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Ornament Spa — Admin</title>
   <style>
     :root {
@@ -199,6 +199,28 @@
     /* ── 2-col grid ── */
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; }
     @media (max-width:700px) { .grid-2 { grid-template-columns:1fr; } }
+
+    /* ── MOBILE TOP BAR ── */
+    .mobile-topbar { display:none; position:sticky; top:0; z-index:100; background:linear-gradient(135deg,#824D88,#6a3d70); color:#fff; padding:max(14px,env(safe-area-inset-top)) 16px 14px; align-items:center; gap:12px; min-height:56px; box-shadow:0 2px 8px rgba(130,77,136,0.25); }
+    .mobile-topbar-title { flex:1; font-size:17px; font-weight:700; }
+    .mobile-topbar-sub { font-size:11px; color:rgba(255,255,255,0.65); }
+    @media (max-width:900px) {
+      .mobile-topbar { display:flex; }
+      .main { padding:0 0 calc(68px + env(safe-area-inset-bottom)) 0; }
+      .page { padding:16px; }
+      .page-header { margin-bottom:16px; }
+    }
+    @media (min-width:901px) { .mobile-topbar { display:none !important; } }
+
+    /* ── MOBILE BOTTOM NAV ── */
+    .mobile-bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; z-index:300; background:#fff; border-top:1px solid var(--border); padding-bottom:env(safe-area-inset-bottom); box-shadow:0 -2px 12px rgba(0,0,0,0.08); }
+    @media (max-width:900px) { .mobile-bottom-nav { display:flex; } }
+    @media (min-width:901px) { .mobile-bottom-nav { display:none !important; } }
+    .mob-nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px 2px; cursor:pointer; color:var(--muted); font-size:10px; font-weight:500; gap:3px; min-height:56px; background:none; border:none; font-family:inherit; -webkit-tap-highlight-color:transparent; transition:color 0.15s; position:relative; }
+    .mob-nav-btn.active { color:var(--brand); }
+    .mob-nav-btn svg { width:22px; height:22px; fill:currentColor; }
+    .mob-nav-btn .mob-badge { position:absolute; top:6px; right:calc(50% - 18px); background:#ef5350; color:#fff; font-size:10px; font-weight:700; border-radius:10px; padding:1px 5px; min-width:16px; text-align:center; display:none; }
+    .mob-nav-btn .mob-badge.visible { display:block; }
   </style>
   <link rel="stylesheet" href="/static/ornament_admin_theme.css">
 </head>
@@ -255,6 +277,14 @@
 
   <!-- MAIN -->
   <main class="main">
+
+    <!-- MOBILE TOP BAR -->
+    <div class="mobile-topbar">
+      <div>
+        <div class="mobile-topbar-title" id="mobile-page-title">Pregled</div>
+        <div class="mobile-topbar-sub">Ornament Spa</div>
+      </div>
+    </div>
 
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
@@ -430,6 +460,32 @@
   </main>
 </div>
 
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <button class="mob-nav-btn active" data-mob-page="dashboard" onclick="navTo('dashboard')">
+    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+    Pregled
+    <span class="mob-badge" id="mob-badge-dashboard"></span>
+  </button>
+  <button class="mob-nav-btn" data-mob-page="reservations" onclick="navTo('reservations')">
+    <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+    Rezervacije
+    <span class="mob-badge" id="mob-badge-reservations"></span>
+  </button>
+  <button class="mob-nav-btn" data-mob-page="calendar" onclick="navTo('calendar')">
+    <svg viewBox="0 0 24 24"><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
+    Kalendar
+  </button>
+  <button class="mob-nav-btn" data-mob-page="conversations" onclick="navTo('conversations')">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+    Pogovori
+  </button>
+  <button class="mob-nav-btn" data-mob-page="analytics" onclick="navTo('analytics')">
+    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+    Analitika
+  </button>
+</nav>
+
 <!-- DETAIL MODAL -->
 <div class="modal-backdrop" id="detail-modal">
   <div class="modal">
@@ -472,16 +528,23 @@ function doLogin() {
 document.getElementById('login-key').addEventListener('keypress', function(e) { if (e.key === 'Enter') doLogin(); });
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
+var PAGE_TITLES = { dashboard:'Pregled', reservations:'Rezervacije', calendar:'Kalendar', conversations:'Pogovori', analytics:'Analitika' };
 function navTo(page) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  document.querySelectorAll('.mob-nav-btn').forEach(function(n) { n.classList.remove('active'); });
   document.getElementById('page-' + page).classList.add('active');
   var navEl = document.querySelector('[data-page="' + page + '"]');
   if (navEl) navEl.classList.add('active');
+  var mobEl = document.querySelector('[data-mob-page="' + page + '"]');
+  if (mobEl) mobEl.classList.add('active');
+  var titleEl = document.getElementById('mobile-page-title');
+  if (titleEl) titleEl.textContent = PAGE_TITLES[page] || page;
   if (page === 'reservations') loadReservations();
   if (page === 'conversations') loadConversations();
   if (page === 'analytics') loadAnalytics();
   if (page === 'calendar') { buildCalGrid(); loadCalReservations(); }
+  window.scrollTo(0, 0);
 }
 document.querySelectorAll('.nav-item').forEach(function(el) {
   el.addEventListener('click', function() { navTo(el.dataset.page); });
@@ -507,15 +570,21 @@ function loadStats() {
       document.getElementById('kpi-skupaj').textContent = data.skupaj;
       document.getElementById('dash-subtitle').textContent = 'Skupaj ' + data.skupaj + ' rezervacij' + (caka ? ', ' + caka + ' čaka' : '');
 
-      // nav badges
+      // nav badges (sidebar + mobile bottom nav)
       var bd = document.getElementById('badge-dashboard');
       var br = document.getElementById('badge-reservations');
+      var mbd = document.getElementById('mob-badge-dashboard');
+      var mbr = document.getElementById('mob-badge-reservations');
       if (caka > 0) {
         bd.textContent = caka; bd.classList.add('visible');
         br.textContent = caka; br.classList.add('visible');
+        if (mbd) { mbd.textContent = caka; mbd.classList.add('visible'); }
+        if (mbr) { mbr.textContent = caka; mbr.classList.add('visible'); }
       } else {
         bd.classList.remove('visible');
         br.classList.remove('visible');
+        if (mbd) mbd.classList.remove('visible');
+        if (mbr) mbr.classList.remove('visible');
       }
 
       var total = data.skupaj || 1;
