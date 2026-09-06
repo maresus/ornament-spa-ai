@@ -471,7 +471,7 @@
           </div>
           <h4>Rezervacija poslana!</h4>
           <p>Kontaktirali vas bomo v najkrajšem moznem casu.<br><br>
-          Tel: <a href="tel:+38631683787" style="color:#824D88;">031 683 787</a><br>info@ornamentspa.eu</p>
+          Tel: <a href="tel:+38631683787" style="color:#824D88;">031 683 787</a><br><a href="mailto:info@ornamentspa.eu" style="color:#824D88;">info@ornamentspa.eu</a></p>
         </div>
       </div>
     `;
