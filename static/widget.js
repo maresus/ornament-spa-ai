@@ -348,7 +348,7 @@
           <input type="text" id="kv-widget-input" placeholder="${CONFIG.placeholder}">
           <button id="kv-widget-send">${icons.send}</button>
         </div>
-        <div id="kv-widget-disclaimer">&#x1F916; AI asistent (EU AI Act, cl. 50). Za rezervacijo: <a href="tel:+38631683787">031 683 787</a>.</div>
+        <div id="kv-widget-disclaimer">&#x1F916; AI asistent (EU AI Act, čl. 50). Za rezervacijo: <a href="tel:+38631683787">031 683 787</a>.</div>
         <div id="kv-widget-powered">built by: <a href="https://spoznaj-ai.si" target="_blank">spoznaj-ai.si</a></div>
       </div>
       <div id="mo-inquiry-form-view">
