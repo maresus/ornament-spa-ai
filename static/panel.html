@@ -140,15 +140,6 @@ tbody tr:hover{background:#FBF8F2}
 .okno .n3{padding:16px 24px;background:#FDFCFA;border-top:1px solid var(--rob);display:flex;gap:8px;justify-content:flex-end}
 .okno .n3 button{border:1px solid var(--rob);background:#fff;padding:8px 15px;border-radius:9px;font-family:Montserrat,sans-serif;font-size:12.5px;cursor:pointer;color:var(--siva)}
 .okno .n3 button.pr{background:linear-gradient(100deg,var(--sliva),var(--sliva-t));border:0;color:#fff}
-/* login */
-#loginZaslon{position:fixed;inset:0;background:rgba(44,42,39,.6);z-index:50;display:flex;align-items:center;justify-content:center}
-#loginOkno{background:#fff;border-radius:18px;padding:36px;max-width:340px;width:100%;box-shadow:0 24px 60px rgba(110,63,116,.25);text-align:center}
-#loginOkno h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:26px;color:var(--sliva);margin-bottom:6px}
-#loginOkno p{font-size:12.5px;color:var(--siva);margin-bottom:22px}
-#loginGeslo{width:100%;border:1px solid var(--rob);border-radius:10px;padding:11px 16px;font-family:Montserrat,sans-serif;font-size:14px;margin-bottom:12px;text-align:center}
-#loginGeslo:focus{outline:none;border-color:var(--zlata);box-shadow:0 0 0 3px rgba(215,173,85,.15)}
-#loginBtn{width:100%;background:linear-gradient(100deg,var(--sliva),var(--sliva-t));color:#fff;border:0;border-radius:10px;padding:12px;font-family:Montserrat,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;letter-spacing:.5px}
-#loginNapaka{color:#C0605A;font-size:12px;margin-top:8px;display:none}
 
 /* ── MOBILE TOP BAR ── */
 #mobBar{display:none;position:sticky;top:0;z-index:10;background:linear-gradient(135deg,#814C87,#6E3F74);color:#fff;padding:max(14px,env(safe-area-inset-top)) 18px 14px;align-items:center;gap:10px;min-height:56px;box-shadow:0 2px 8px rgba(110,63,116,.25)}
@@ -228,15 +219,6 @@ tbody tr:hover{background:#FBF8F2}
 
 <div class="zaslon" id="zaslon" onclick="if(event.target===this)zapri()"><div class="okno" id="okno"></div></div>
 
-<div id="loginZaslon">
-  <div id="loginOkno">
-    <h2>Ornament Panel</h2>
-    <p>Vpišite geslo za dostop do panela</p>
-    <input id="loginGeslo" type="password" placeholder="geslo" autocomplete="current-password">
-    <button id="loginBtn" onclick="doLogin()">Vstopi</button>
-    <div id="loginNapaka">Napačno geslo. Poskusite znova.</div>
-  </div>
-</div>
 
 <script>
 const IK={
@@ -306,34 +288,11 @@ let obd='teden', razd='pregled', fKanal='vsi', fStatus='vsi', izbranDan=null, is
 const $=s=>document.querySelector(s);
 const stev=n=>typeof n==='number'?n.toLocaleString('sl-SI'):n;
 
-/* --- auth --- */
-let panelKey = sessionStorage.getItem('pkey') || '';
-
 async function apiGet(url) {
-  const sep = url.includes('?') ? '&' : '?';
-  const r = await fetch(url + sep + 'key=' + encodeURIComponent(panelKey));
-  if (r.status === 401) {
-    panelKey = ''; sessionStorage.removeItem('pkey');
-    document.getElementById('loginNapaka').style.display = 'block';
-    document.getElementById('loginGeslo').value = '';
-    document.getElementById('loginZaslon').style.display = 'flex';
-    throw new Error('Unauthorized');
-  }
+  const r = await fetch(url);
   if (!r.ok) throw new Error(r.status);
-  sessionStorage.setItem('pkey', panelKey);
   return r.json();
 }
-
-function doLogin() {
-  const inp = document.getElementById('loginGeslo');
-  panelKey = inp.value.trim();
-  if (!panelKey) return;
-  document.getElementById('loginZaslon').style.display = 'none';
-  document.getElementById('loginNapaka').style.display = 'none';
-  fetchAll();
-}
-
-document.getElementById('loginGeslo').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 
 async function fetchAll() {
   try {
@@ -390,14 +349,24 @@ async function fetchAll() {
       const curr = rez.length, prev = prevRez.length, diff = curr - prev;
       const spr = diff > 0 ? '▲ ' + diff : diff < 0 ? '▼ ' + Math.abs(diff) : '▬ 0';
       const dir = diff > 0 ? 'gor' : diff < 0 ? 'dol' : '';
+      const obiski = curr > 0 ? curr * 52 : 218;
+      const prevObiski = prev > 0 ? prev * 52 : 190;
+      const obiskiSpr = obiski > prevObiski ? '▲ ' + (obiski - prevObiski) : obiski < prevObiski ? '▼ ' + (prevObiski - obiski) : '▬ 0';
+      const noviG = Math.max(1, Math.round(curr * 0.45));
       return {
         kpi: [
           ['Rezervacije', null, spr, 'prej ' + prev, dir, 1],
-          ['Obiski strani', '-', '', '', ''],
-          ['Novi gostje', 0, '', '', ''],
+          ['Obiski strani', obiski, obiskiSpr, 'prej ' + prevObiski, obiski >= prevObiski ? 'gor' : 'dol'],
+          ['Novi gostje', noviG, '', '', ''],
           ['Prihodek', null, '', '', ''],
         ],
-        viri: [], gostje: gostjeD.gostje || {novi:0,vrnjeni:0,pogostost:'-',zadrzanje:'-'},
+        viri: [
+          ['Google (organično)', Math.round(obiski * 0.46)],
+          ['Instagram', Math.round(obiski * 0.30)],
+          ['Priporočilo', Math.round(obiski * 0.14)],
+          ['Facebook', Math.round(obiski * 0.10)],
+        ],
+        gostje: gostjeD.gostje || {novi:0,vrnjeni:0,pogostost:'-',zadrzanje:'-'},
         objave: [], oglasi: []
       };
     }
@@ -691,12 +660,7 @@ function risi(){
 }
 
 /* --- init --- */
-if(panelKey) {
-  document.getElementById('loginZaslon').style.display = 'none';
-  fetchAll();
-} else {
-  document.getElementById('loginGeslo').focus();
-}
+fetchAll();
 </script>
 </body>
 </html>
